@@ -1,0 +1,24 @@
+.env
+.env.*
+!.env.example
+!.env.*.example
+/vendor/
+/node_modules/
+/backend/vendor/
+/backend/node_modules/
+/frontend/node_modules/
+/frontend/dist/
+/backend/public/build/
+/backend/storage/*.key
+*.log
+.DS_Store
+.idea/
+.vscode/
+/coverage/
+/backend/coverage/
+/frontend/coverage/
+
+# Composer credentials and local tooling
+**/auth.json
+/backend/.phpunit.cache/
+/backend/.phpunit.result.cache

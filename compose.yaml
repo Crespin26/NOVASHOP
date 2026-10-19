@@ -1,0 +1,61 @@
+name: novashop
+
+x-php: &php
+  build:
+    context: ./docker/php
+  user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+  working_dir: /app
+  volumes:
+    - ./backend:/app
+  environment:
+    DB_HOST: postgres
+    DB_PORT: 5432
+    DB_DATABASE: novashop
+    DB_USERNAME: novashop
+    DB_PASSWORD: local-development-only
+  depends_on:
+    postgres:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: novashop
+      POSTGRES_USER: novashop
+      POSTGRES_PASSWORD: local-development-only
+    ports:
+      - "127.0.0.1:${DB_FORWARD_PORT:-5433}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./docker/postgres/init-testing.sql:/docker-entrypoint-initdb.d/01-testing.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U novashop -d novashop"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  api:
+    <<: *php
+    command: ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000", "--no-reload"]
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
+    healthcheck:
+      test: ["CMD", "php", "-r", "exit(@file_get_contents('http://127.0.0.1:8000/api/v1/ready') === false ? 1 : 0);"]
+      interval: 3s
+      timeout: 3s
+      start_period: 5s
+      retries: 20
+
+  worker:
+    <<: *php
+    command: ["php", "artisan", "queue:work", "--tries=3", "--timeout=60"]
+    profiles: ["jobs"]
+
+  scheduler:
+    <<: *php
+    command: ["php", "artisan", "schedule:work"]
+    profiles: ["jobs"]
+
+volumes:
+  postgres-data:
