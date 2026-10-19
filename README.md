@@ -22,7 +22,7 @@ Plateforme e-commerce Full Stack conçue pour permettre aux entreprises de comme
 ## Stack et intégrations
 
 - **Backend :** Laravel 13, PHP 8.5, API JSON versionnée et Sanctum préparé pour les sessions.
-- **Frontend :** Vue 3 et Vite ; Vue Router et Pinia seront ajoutés avec les modules concernés.
+- **Frontend :** Vue 3, Vite et Vue Router 4 ; gestion des pages publiques et filtres dans l’URL. Pinia sera évalué avec les modules concernés.
 - **Données :** PostgreSQL 17 ; files de tâches en base et cache fichier pour le développement.
 - **Paiement :** Stripe Checkout et webhooks.
 - **Qualité :** PHPUnit sur PostgreSQL, tests Node et CI GitHub Actions configurée ; parcours métier de bout en bout à venir.
@@ -79,10 +79,15 @@ L’environnement Compose utilise le serveur de développement PHP et des identi
 
 Le panier et les favoris restent dans le stockage local du navigateur. Le formulaire newsletter simule uniquement une inscription, sans transmission ni conservation d’adresse. Les vues compte et paiement indiquent les intégrations encore nécessaires.
 
+Les pages publiques disposent d’URL directes : `/`, `/boutique`, `/favoris` et `/produits/casque-sans-fil-studio`. Exemple de filtres partageables : `/boutique?category=high-tech&sort=price-up`. Les produits inconnus et chemins inexistants affichent une page introuvable.
+
+Le routage ne remplace pas les autorisations Laravel. Compte et checkout restent des aperçus sans authentification ni paiement ; aucune zone administrateur n’est ouverte par le routeur. Voir les [mesures de sécurité et limites du routage](docs/security-and-quality.md#routage-public-et-stockage-local).
+
 Voir le [guide de l’interface](docs/interface.md) et le [README backend](backend/README.md) pour le contrat API, les tests et la base de données.
 
 ## Documentation
 
+- [Plan des pages, accès et navigation — référence de finalisation](docs/pages-and-navigation.md)
 - [Spécifications fonctionnelles](docs/specifications.md)
 - [Architecture et modèle de données](docs/architecture.md)
 - [Sécurité, paiement et stratégie de tests](docs/security-and-quality.md)

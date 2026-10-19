@@ -12,6 +12,20 @@ Les fondations Laravel 13, PostgreSQL 17, client API Vue et CI sont configurées
 
 Livrable : un autre développeur peut démarrer les deux applications à partir du README.
 
+## Frontend avant les modules métier
+
+La séquence de finalisation frontend → API métier → connexion suit le [plan des pages et de la navigation](pages-and-navigation.md). Les lots métier ci-dessous restent le détail technique de réalisation.
+
+- [x] Point 1 — Formaliser l’inventaire des pages, URL, liens accueil/en-tête/footer, accès et critères de finalisation.
+- [ ] Point 2 — Finaliser l’en-tête et le footer selon les destinations disponibles, puis activer les autres liens avec leurs pages.
+
+- [x] Installer Vue Router 4 et séparer les vues publiques du layout partagé.
+- [x] Donner des URL à l’accueil, à la boutique, aux favoris et aux produits.
+- [x] Synchroniser les filtres avec l’URL et afficher les pages introuvables.
+- [x] Borner et normaliser les paramètres, renforcer la restauration du panier local et vérifier la navigation.
+- [ ] Compléter le catalogue et les fiches produits selon le contrat API à définir.
+- [ ] Développer les pages panier, checkout, espace client et administration, avant connexion aux modules backend correspondants.
+
 ## 2. Catalogue et authentification
 
 - [ ] Modéliser les produits, catégories et images ; créer des données fictives.

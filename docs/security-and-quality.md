@@ -15,6 +15,21 @@ Ce document définit les exigences de la plateforme complète ; il ne constitue 
 - Journaux sans secrets, données de carte ni adresse complète ; accès aux données clients limité et politique de conservation à définir avant production.
 - Sauvegardes chiffrées et restauration vérifiée avant ouverture du service.
 
+## Routage public et stockage local
+
+Mesures présentes dans cette étape :
+
+- Routes publiques explicitement déclarées et vues chargées depuis une liste statique ; aucune URL utilisateur ne détermine un import de code.
+- Paramètres limités à `q`, `category` et `sort` pour boutique/favoris : valeurs scalaires, longueur de recherche bornée et listes autorisées pour les autres filtres. Les paramètres inconnus, dont `redirect`, `token` et `role`, ne sont pas consommés et sont retirés de l’URL par le routeur.
+- Produit résolu uniquement depuis un slug connu. Les chemins inconnus, y compris les futures zones privées, affichent la page introuvable.
+- Texte issu des URL affiché avec l’interpolation Vue, sans `v-html` ni compilation de contenu utilisateur. Le navigateur vérifié n’exécute pas le HTML injecté dans une recherche. Voir les [recommandations de sécurité Vue](https://vuejs.org/guide/best-practices/security).
+- Politique de référent `strict-origin-when-cross-origin` dans le document HTML.
+- Panier local limité à des références et quantités ; à la restauration, les prix et stocks fournis par ce stockage sont ignorés. Entrées inconnues, quantités invalides et données corrompues sont écartées ; doublons regroupés et quantités plafonnées au stock fictif. Aucun jeton d’authentification, mot de passe ou détail de carte n’est stocké par cette logique.
+
+Ces mesures frontend améliorent la robustesse de la démonstration. Elles ne créent pas de contrôle d’accès serveur ni de garantie de prix ou de disponibilité. Les futurs endpoints devront authentifier la session, contrôler les droits sur chaque ressource, recalculer les montants et gérer le stock transactionnellement. Les éventuels gardes Vue seront uniquement une aide de navigation ; aucun indicateur `isAdmin` ou `isLoggedIn` en stockage local ne devra faire autorité.
+
+Ne pas placer de données personnelles, secrets ou informations de paiement dans les URL. Leur retrait côté client ne peut pas effacer une URL déjà reçue par un serveur ou enregistrée dans des journaux. Les politiques d’en-têtes HTTP (dont CSP), HTTPS et cookies de production seront configurées et testées avec l’hébergement et l’authentification.
+
 ## Stratégie de tests
 
 | Niveau | Cas prioritaires |
