@@ -28,7 +28,7 @@ Le client `frontend/src/api.js` centralise les requêtes JSON, les erreurs, les 
 
 ## Évolution
 
-Remplacer les données de `frontend/src/shop.js` par les réponses de l’API Laravel, puis connecter authentification, commandes et Stripe. Revalider les prix et stocks côté serveur. Vue Router 4 fournit les pages publiques, avec chargement différé des vues. La recherche (`q`, 120 caractères maximum), la catégorie (`category`, slug autorisé) et le tri (`sort`) sont partagés via l’URL de la boutique ou des favoris. Le retour/suivant rétablit ces filtres. Les autres paramètres sont supprimés par le routeur. Les liens internes utilisent des destinations connues, sans paramètre de redirection externe.
+Remplacer les données de `frontend/src/shop.js` par les réponses de l’API Laravel, puis connecter authentification, commandes et Stripe. Revalider les prix et stocks côté serveur. Vue Router 4 fournit les pages publiques, avec chargement différé des vues. La recherche (`q`, 120 caractères maximum), la catégorie (`category`, slug autorisé) et le tri (`sort`) sont partagés via l’URL de la boutique, des favoris, des promotions ou des nouveautés. Le retour/suivant rétablit ces filtres. Les autres paramètres sont supprimés par le routeur. Les liens internes utilisent des destinations connues, sans paramètre de redirection externe.
 
 Les images Unsplash et les polices Google sont chargées à distance. Avant publication commerciale, choisir et vérifier les droits des ressources finales, puis héberger les actifs validés localement.
 
@@ -38,6 +38,8 @@ Les images Unsplash et les polices Google sont chargées à distance. Avant publ
 | --- | --- |
 | `/` | Accueil |
 | `/boutique` | Catalogue de démonstration |
+| `/promotions` | Produits à prix réduit dans la démonstration |
+| `/nouveautes` | Publications récentes du catalogue de démonstration |
 | `/favoris` | Favoris locaux |
 | `/produits/:slug` | Produit connu ou message produit introuvable |
 | Tout autre chemin | Page introuvable |
@@ -53,7 +55,7 @@ Référence : [Vue Router — mode historique](https://router.vuejs.org/guide/es
 Les composants `StoreHeader.vue` et `StoreFooter.vue`, dans `frontend/src/components/layout/`, partagent les destinations de `frontend/src/navigation.js`. `NavigationItem.vue` distingue liens, actions et rubriques en préparation.
 
 - Accueil, boutique, favoris et catégories du catalogue utilisent des liens internes connus. Les catégories mènent provisoirement au catalogue filtré ; les pages catégorie dédiées seront reliées lorsqu’elles existeront.
-- Promotions et nouveautés ne renvoient plus au catalogue générique : elles portent la mention « Bientôt » jusqu’au développement des listes correspondantes. Les informations, pages légales et commandes absentes sont également indiquées sans faux lien.
+- Au point 3, promotions et nouveautés ont reçu leurs listes dédiées ; les liens sont désormais actifs dans l’en-tête et le footer. Les informations, pages légales et commandes absentes sont également indiquées sans faux lien.
 - Le compte est un aperçu explicitement indiqué. Le panier reste un tiroir accessible depuis l’en-tête, le menu mobile et le footer ; ses produits renvoient à leur fiche. La page panier sera ajoutée au point 6.
 - Les catégories sur ordinateur forment un panneau de navigation. Le menu mobile propose navigation principale, catégories, favoris, compte et panier. Ces panneaux sont des disclosures non modaux : navigation Tab habituelle, Échap avec retour au déclencheur, fermeture extérieure, fermeture après navigation et au changement de mode d’écran.
 - La recherche conserve la catégorie actuelle du catalogue, respecte la normalisation de l’URL et possède une action d’effacement qui rend le focus au champ.
@@ -61,3 +63,17 @@ Les composants `StoreHeader.vue` et `StoreFooter.vue`, dans `frontend/src/compon
 - Aucun faux réseau social ni moyen de paiement actif n’est affiché. Le footer indique qu’aucun paiement réel n’est effectué dans la démonstration.
 
 Vérification effectuée sur l’aperçu compilé : liens, recherche, clavier, ouverture/fermeture, conservation du panier, menu mobile et absence de débordement horizontal à 320, 390, 768, 1024 et 1440 px. Les tests de `navigation.test.js` contrôlent les destinations disponibles et les statuts en préparation.
+
+## Accueil — point 3
+
+`frontend/src/home.js` regroupe les collections, les destinations et les sélections de l’accueil. Les trois bannières utilisent les produits du catalogue pour leurs visuels, liens et prix. Leurs indicateurs ainsi que les boutons précédent/suivant sont manuels ; aucune rotation automatique. Le visuel et l’encart d’un produit ouvrent sa fiche, et le bouton de collection ouvre son univers dans le catalogue filtré.
+
+Les offres sélectionnent les produits dont le prix est inférieur au prix de référence, puis les ordonnent par réduction. Les pourcentages sont arrondis vers le bas pour ne pas dépasser la réduction calculée. Le badge du carrousel affiche la réduction maximale de sa catégorie, et mène à `/promotions` avec ce filtre.
+
+Les nouveautés utilisent `publishedAt` et une fenêtre de 30 jours, dans l’ordre des publications. L’instantané local `CATALOG_DATE` est fixé au **19 octobre 2026** ; ce n’est pas une actualisation commerciale en temps réel. Le serveur fournira ensuite les produits publiés et la référence temporelle adaptée. Les avis restent illustratifs et sont indiqués « avis démo » sur les cartes. Les portraits et étoiles suggérant des clients réels ont été retirés de la bannière.
+
+Les routes `/promotions` et `/nouveautes` réutilisent la liste du catalogue : filtres de catégorie, recherche via l’URL, tri et états sans résultat. Elles sont fournies dès ce point pour que les liens d’accueil soient fonctionnels ; les filtres avancés, la pagination et les pages catégorie restent au point 4. Les paramètres acceptés restent bornés et les paramètres sensibles ou inconnus sont retirés par le routeur.
+
+La bannière audio mène au high-tech et son lien porte ce libellé, sans promettre un filtre audio absent. Les services encore non connectés sont explicitement annoncés comme prévus ou simulés. Les liens de navigation sont de vrais liens internes ; favoris, ajout au panier et changements de bannière restent des boutons.
+
+Vérifications : tests des dates, réductions, sélections et destinations ; compilation ; parcours navigateur avec liens directs, rechargement, historique, carrousel, filtres de collections, favoris, panier et largeurs de 320 à 1440 px. Aucune transaction réelle n’est effectuée.

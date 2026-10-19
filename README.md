@@ -27,7 +27,7 @@ Plateforme e-commerce Full Stack conçue pour permettre aux entreprises de comme
 - **Paiement :** Stripe Checkout et webhooks.
 - **Qualité :** PHPUnit sur PostgreSQL, tests Node et CI GitHub Actions configurée ; parcours métier de bout en bout à venir.
 
-Le prototype utilise Vue 3, Vite et Lucide. Les données, prix, stocks et avis sont fictifs. Les visuels proviennent d’Unsplash et les polices de Google Fonts ; leur chargement nécessite une connexion Internet.
+Le prototype utilise Vue 3, Vite et Lucide. L’accueil et les listes promotions/nouveautés utilisent les mêmes produits : réductions calculées et dates de publication fictives. La sélection des nouveautés repose sur un instantané daté du 19 octobre 2026, pour une démonstration reproductible. Les données, prix, stocks et avis sont fictifs. Les visuels proviennent d’Unsplash et les polices de Google Fonts ; leur chargement nécessite une connexion Internet.
 
 ## Démarrer le projet
 
@@ -81,7 +81,7 @@ Le panier et les favoris restent dans le stockage local du navigateur. Le formul
 
 L’en-tête et le footer partagent leur navigation, avec menus ordinateur/mobile, recherche, favoris et accès au tiroir panier. Les destinations encore absentes sont indiquées « Bientôt » ; le compte reste un aperçu.
 
-Les pages publiques disposent d’URL directes : `/`, `/boutique`, `/favoris` et `/produits/casque-sans-fil-studio`. Exemple de filtres partageables : `/boutique?category=high-tech&sort=price-up`. Les produits inconnus et chemins inexistants affichent une page introuvable.
+Les pages publiques disposent d’URL directes : `/`, `/boutique`, `/promotions`, `/nouveautes`, `/favoris` et `/produits/casque-sans-fil-studio`. Exemple de filtres partageables : `/boutique?category=high-tech&sort=price-up`. Les produits inconnus et chemins inexistants affichent une page introuvable.
 
 Le routage ne remplace pas les autorisations Laravel. Compte et checkout restent des aperçus sans authentification ni paiement ; aucune zone administrateur n’est ouverte par le routeur. Voir les [mesures de sécurité et limites du routage](docs/security-and-quality.md#routage-public-et-stockage-local).
 

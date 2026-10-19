@@ -9,7 +9,7 @@ Ce document est la référence de travail pour les pages, les URL et les destina
 - Hypothèse de départ : produits physiques, compte requis pour commander, une devise principale. Le code de démonstration utilise EUR ; devise commerciale, variantes, pays, taxes, livraison et politique de retour restent à définir avant les modules concernés.
 - Le catalogue, les prix, les avis, les stocks et les montants affichés sont fictifs. Une fonctionnalité frontend n’est considérée comme complète commercialement qu’après connexion et validation serveur.
 
-État observé dans `frontend/src/router/index.js` : cinq routes nommées sont déclarées (`home`, `catalog`, `favorites`, `product`, `not-found`). Le panier est un tiroir partagé ; compte et checkout sont des fenêtres explicatives. Les autres destinations de ce document restent à créer. Les pages publiques existantes restent à enrichir selon leurs critères ci-dessous.
+État observé dans `frontend/src/router/index.js` : sept routes nommées sont déclarées (`home`, `catalog`, `promotions`, `new-arrivals`, `favorites`, `product`, `not-found`). Le panier est un tiroir partagé ; compte et checkout sont des fenêtres explicatives. Les autres destinations de ce document restent à créer. Les pages publiques existantes restent à enrichir selon leurs critères ci-dessous.
 
 ### Lecture des statuts et accès
 
@@ -31,8 +31,8 @@ Les noms de routes ci-dessous sont des cibles stables pour les futurs liens nomm
 | PUB-01 | Accueil | `/` | `home` | Prototype | Sélections, univers, offres et nouveautés → catégorie, produit ou liste correspondante |
 | PUB-02 | Boutique / recherche | `/boutique` | `catalog` | Prototype | Recherche, filtres, tri, pagination → produit |
 | PUB-03 | Catégorie | `/categories/:slug` | `category` | À créer | Introduction, sous-sélections et catalogue filtré → produit |
-| PUB-04 | Promotions | `/promotions` | `promotions` | À créer | Réductions actives, prix de référence et filtres → produit |
-| PUB-05 | Nouveautés | `/nouveautes` | `new-arrivals` | À créer | Produits classés selon leur date de publication → produit |
+| PUB-04 | Promotions | `/promotions` | `promotions` | Prototype | Réductions actives, prix de référence et filtres → produit |
+| PUB-05 | Nouveautés | `/nouveautes` | `new-arrivals` | Prototype | Produits classés selon leur date de publication → produit |
 | PUB-06 | Produit | `/produits/:slug` | `product` | Prototype | Images, prix, description, disponibilité, options éventuelles → panier ou favoris |
 | PUB-07 | Favoris | `/favoris` | `favorites` | Prototype | Liste sauvegardée, retrait, achat et état vide → produit ou boutique |
 | PUB-08 | Panier | `/panier` | `cart` | À créer | Articles, quantités, frais estimés et total → identification ou checkout |
@@ -138,8 +138,8 @@ L’administration aura un layout distinct : navigation latérale, compte couran
 | --- | --- | --- |
 | Accueil | `home` | État actif sur l’accueil |
 | La boutique | `catalog` | Catalogue complet |
-| Bonnes affaires | `promotions` | Indiquées « Bientôt » au point 2 ; le lien au tri croissant a été retiré de l’en-tête. Une réduction et un bas prix sont deux critères différents |
-| Nouveautés | `new-arrivals` | Indiquées « Bientôt » au point 2 ; le lien générique a été retiré de l’en-tête. Utiliser la date de publication |
+| Bonnes affaires | `promotions` | Liste dédiée disponible depuis le point 3 ; le lien au simple tri croissant a été retiré. Une réduction et un bas prix sont deux critères différents |
+| Nouveautés | `new-arrivals` | Liste dédiée disponible depuis le point 3, selon la date de publication fictive |
 | Tout découvrir | `catalog` | Aucun filtre de catégorie |
 | Catégorie, menu ou colonne latérale | `category` | Même slug et destination dans les deux menus |
 | Inspiration du moment | Catégorie réellement présentée | Pour le premier contenu : `category`, slug `maison-deco` |
@@ -293,8 +293,10 @@ Pour chaque ID de l’inventaire :
 
 Le point 2 est une première passe de navigation globale. Les liens qui dépendent des points suivants seront activés avec leurs pages, puis une revue intégrale en point 13 vérifiera l’absence de destination provisoire. Définir les contrats de données de chaque écran avant de finaliser ses formulaires frontend évitera des divergences avec les API.
 
-Les points 1 et 2 sont réalisés pour le périmètre disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
+Les points 1, 2 et 3 sont réalisés pour le périmètre disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
 
 Les catégories restent reliées au catalogue filtré jusqu’au point 4. Les pages panier, compte, assistance et informations légales ne sont pas encore implémentées. Leur activation reste suivie avec les lots concernés ; cela ne bloque pas la première passe du point 2.
 
-Prochain travail : point 3, accueil, avec cette référence comme liste de contrôle.
+Le point 3 relie l’accueil à des sélections cohérentes, aux produits des bannières et aux listes promotions/nouveautés désormais disponibles. Les prix et réductions proviennent du même catalogue de démonstration ; les nouveautés reposent sur ses dates de publication fictives.
+
+Prochain travail : point 4, boutique et catégories, avec filtres avancés, pagination et pages catégorie dédiées.

@@ -22,12 +22,10 @@ test('all active header and footer links resolve to declared public pages', () =
   }
 })
 
-test('promotions and nouveautés are not confused with generic catalog sorting', () => {
-  for (const label of ['Promotions', 'Nouveautés']) {
-    const item = mainNavigation.find(entry => entry.label === label)
-    assert.equal(item.pending, true)
-    assert.equal(item.to, undefined)
-  }
+test('promotions and nouveautés have their own declared collection destinations', () => {
+  assert.equal(mainNavigation.find(item => item.label === 'Promotions').to.name, 'promotions')
+  assert.equal(mainNavigation.find(item => item.label === 'Nouveautés').to.name, 'new-arrivals')
+  for (const label of ['Promotions', 'Nouveautés']) assert.equal(mainNavigation.find(item => item.label === label).pending, undefined)
 })
 
 test('current navigation reflects both catalog section and exact category', () => {

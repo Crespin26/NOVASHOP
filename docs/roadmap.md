@@ -18,6 +18,8 @@ La séquence de finalisation frontend → API métier → connexion suit le [pla
 
 - [x] Point 1 — Formaliser l’inventaire des pages, URL, liens accueil/en-tête/footer, accès et critères de finalisation.
 - [x] Point 2 — Finaliser l’en-tête et le footer selon les destinations disponibles : liens réels, rubriques « Bientôt », navigation mobile et focus vérifiés.
+- [x] Point 3 — Finaliser l’accueil : destinations des collections, liens produits, carrousel, sélections calculées et listes promotions/nouveautés de démonstration.
+- [ ] Point 4 — Compléter boutique et catégories avec filtres avancés, pagination et pages catégorie dédiées.
 - [ ] Activer les liens encore en préparation à mesure que leurs pages seront créées, puis effectuer la revue globale au point 13.
 
 - [x] Installer Vue Router 4 et séparer les vues publiques du layout partagé.

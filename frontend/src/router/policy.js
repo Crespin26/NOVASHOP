@@ -1,7 +1,7 @@
 import { categories, products } from '../shop.js'
 
 export const categorySlugs = ['all', 'high-tech', 'mode-accessoires', 'maison-deco', 'beaute-bien-etre', 'sport-plein-air']
-const sorts = ['featured', 'price-up', 'price-down']
+const sorts = ['featured', 'price-up', 'price-down', 'newest']
 const scalar = value => typeof value === 'string' ? value : ''
 
 export function readCatalogQuery(query = {}) {
@@ -30,7 +30,7 @@ export function findProductBySlug(slug) {
 
 /** Only catalog filters may survive in URLs; no redirect, identity or payment values. */
 export function canonicalQuery(routeName, query) {
-  return ['catalog', 'favorites'].includes(routeName) ? makeCatalogQuery(readCatalogQuery(query)) : {}
+  return ['catalog', 'favorites', 'promotions', 'new-arrivals'].includes(routeName) ? makeCatalogQuery(readCatalogQuery(query)) : {}
 }
 
 export function sameQuery(left, right) {

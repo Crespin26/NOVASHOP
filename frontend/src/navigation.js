@@ -10,16 +10,16 @@ export const categoryNavigation = categories.map(category => ({
 export const mainNavigation = [
   { label: 'Accueil', to: { name: 'home' } },
   { label: 'La boutique', to: { name: 'catalog' }, section: true },
-  { label: 'Promotions', pending: true },
-  { label: 'Nouveautés', pending: true },
+  { label: 'Promotions', to: { name: 'promotions' } },
+  { label: 'Nouveautés', to: { name: 'new-arrivals' } },
 ]
 
 export const footerNavigation = [
   { title: 'Explorer', items: [
     { label: 'Toute la boutique', to: { name: 'catalog' } },
     ...categoryNavigation.slice(1, 4),
-    { label: 'Promotions', pending: true },
-    { label: 'Nouveautés', pending: true },
+    { label: 'Promotions', to: { name: 'promotions' } },
+    { label: 'Nouveautés', to: { name: 'new-arrivals' } },
   ] },
   { title: 'Votre NovaShop', items: [
     { label: 'Aperçu du compte', action: 'account' },

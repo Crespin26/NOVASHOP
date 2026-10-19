@@ -40,7 +40,7 @@ function keyboard(event) {
   }
 }
 watch(() => route.fullPath, () => {
-  query.value = ['catalog', 'favorites'].includes(route.name) ? readCatalogQuery(route.query).query : ''
+  query.value = ['catalog', 'favorites', 'promotions', 'new-arrivals'].includes(route.name) ? readCatalogQuery(route.query).query : ''
   closePanels()
 }, { immediate: true })
 watch(() => props.overlayOpen, value => { if (value) closePanels() })

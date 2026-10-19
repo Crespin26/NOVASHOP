@@ -5,6 +5,8 @@ import { canonicalQuery, findProductBySlug, sameQuery } from './policy.js'
 export const routes = [
   { path: '/', name: 'home', component: () => import('../views/HomeView.vue'), meta: { title: 'Vos envies, un nouvel univers.' } },
   { path: '/boutique', name: 'catalog', component: () => import('../views/CatalogView.vue'), meta: { title: 'La boutique' } },
+  { path: '/promotions', name: 'promotions', component: () => import('../views/CatalogView.vue'), meta: { title: 'Les promotions' } },
+  { path: '/nouveautes', name: 'new-arrivals', component: () => import('../views/CatalogView.vue'), meta: { title: 'Les nouveautés' } },
   { path: '/favoris', name: 'favorites', component: () => import('../views/CatalogView.vue'), meta: { title: 'Mes favoris' } },
   { path: '/produits/:slug', name: 'product', component: () => import('../views/ProductView.vue'), meta: { title: 'Produit' } },
   { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('../views/NotFoundView.vue'), meta: { title: 'Page introuvable' } },
