@@ -117,20 +117,20 @@ L’administration aura un layout distinct : navigation latérale, compte couran
 
 ### Bandeau et en-tête
 
-| Élément | Destination / action cible | Écart actuel à traiter |
+| Élément | Destination / action cible | État après le point 2 / suite |
 | --- | --- | --- |
 | Information livraison | `delivery` | Texte informatif ; ajouter un lien si présenté comme action |
 | Annonce commerciale | `promotions` ou catégorie nommée dans l’annonce | Ne pas afficher d’offre sans règle et contenu correspondants |
 | Langue / devise | Sélecteur uniquement si plusieurs options fonctionnent | FR/EUR est une indication, pas un sélecteur ; ne pas ajouter de faux contrôle |
-| Logo | `home` | Lien existant ; harmoniser celui du footer |
+| Logo | `home` | Liens harmonisés dans l’en-tête et le footer |
 | Recherche soumise | `catalog`, paramètre `q`, filtres applicables | Disponible ; conserver validation et longueur maximale |
 | Suggestion produit | `product`, slug connu | Suggestions à développer si retenues |
 | Suggestion catégorie | `category`, slug connu | Suggestions à développer si retenues |
 | Compte visiteur | `login` | Remplacer la fenêtre explicative une fois la page disponible |
 | Compte connecté | `account` | À activer sur la base de la session serveur |
-| Favoris | `favorites` | Disponible ; harmoniser la sémantique lien |
-| Panier | Ouvrir le tiroir partagé | Disponible ; ajouter le lien vers la page panier |
-| Menu mobile | Ouvrir / fermer les mêmes destinations que sur ordinateur | Disponible ; enrichir avec les destinations finales et tester au clavier |
+| Favoris | `favorites` | Liens disponibles dans l’en-tête, le menu mobile et le footer |
+| Panier | Ouvrir le tiroir partagé | Tiroir disponible aux trois emplacements ; lien vers la page panier à ajouter au point 6 |
+| Menu mobile | Ouvrir / fermer les mêmes destinations que sur ordinateur | Menu mobile complet sur les destinations disponibles ; clavier et fermeture vérifiés |
 
 ### Navigation principale et catégories
 
@@ -138,8 +138,8 @@ L’administration aura un layout distinct : navigation latérale, compte couran
 | --- | --- | --- |
 | Accueil | `home` | État actif sur l’accueil |
 | La boutique | `catalog` | Catalogue complet |
-| Bonnes affaires | `promotions` | Remplacer le tri croissant actuel ; une réduction et un bas prix sont deux critères différents |
-| Nouveautés | `new-arrivals` | Remplacer le catalogue générique actuel ; utiliser la date de publication |
+| Bonnes affaires | `promotions` | Indiquées « Bientôt » au point 2 ; le lien au tri croissant a été retiré de l’en-tête. Une réduction et un bas prix sont deux critères différents |
+| Nouveautés | `new-arrivals` | Indiquées « Bientôt » au point 2 ; le lien générique a été retiré de l’en-tête. Utiliser la date de publication |
 | Tout découvrir | `catalog` | Aucun filtre de catégorie |
 | Catégorie, menu ou colonne latérale | `category` | Même slug et destination dans les deux menus |
 | Inspiration du moment | Catégorie réellement présentée | Pour le premier contenu : `category`, slug `maison-deco` |
@@ -293,4 +293,8 @@ Pour chaque ID de l’inventaire :
 
 Le point 2 est une première passe de navigation globale. Les liens qui dépendent des points suivants seront activés avec leurs pages, puis une revue intégrale en point 13 vérifiera l’absence de destination provisoire. Définir les contrats de données de chaque écran avant de finaliser ses formulaires frontend évitera des divergences avec les API.
 
-Le point 1 est documenté. Prochain travail : point 2, en-tête et footer, avec cette référence comme liste de contrôle.
+Les points 1 et 2 sont réalisés pour le périmètre disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
+
+Les catégories restent reliées au catalogue filtré jusqu’au point 4. Les pages panier, compte, assistance et informations légales ne sont pas encore implémentées. Leur activation reste suivie avec les lots concernés ; cela ne bloque pas la première passe du point 2.
+
+Prochain travail : point 3, accueil, avec cette référence comme liste de contrôle.

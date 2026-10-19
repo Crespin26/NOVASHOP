@@ -47,3 +47,17 @@ Vite et son aperçu de production permettent le rechargement des liens directs. 
 Le panier reste un tiroir commun, et les espaces compte/checkout des aperçus. Leurs pages complètes seront développées dans les prochaines étapes.
 
 Référence : [Vue Router — mode historique](https://router.vuejs.org/guide/essentials/history-mode.html).
+
+## En-tête et footer — point 2
+
+Les composants `StoreHeader.vue` et `StoreFooter.vue`, dans `frontend/src/components/layout/`, partagent les destinations de `frontend/src/navigation.js`. `NavigationItem.vue` distingue liens, actions et rubriques en préparation.
+
+- Accueil, boutique, favoris et catégories du catalogue utilisent des liens internes connus. Les catégories mènent provisoirement au catalogue filtré ; les pages catégorie dédiées seront reliées lorsqu’elles existeront.
+- Promotions et nouveautés ne renvoient plus au catalogue générique : elles portent la mention « Bientôt » jusqu’au développement des listes correspondantes. Les informations, pages légales et commandes absentes sont également indiquées sans faux lien.
+- Le compte est un aperçu explicitement indiqué. Le panier reste un tiroir accessible depuis l’en-tête, le menu mobile et le footer ; ses produits renvoient à leur fiche. La page panier sera ajoutée au point 6.
+- Les catégories sur ordinateur forment un panneau de navigation. Le menu mobile propose navigation principale, catégories, favoris, compte et panier. Ces panneaux sont des disclosures non modaux : navigation Tab habituelle, Échap avec retour au déclencheur, fermeture extérieure, fermeture après navigation et au changement de mode d’écran.
+- La recherche conserve la catégorie actuelle du catalogue, respecte la normalisation de l’URL et possède une action d’effacement qui rend le focus au champ.
+- Lorsqu’une fenêtre de panier/compte/checkout est ouverte, le fond est `inert`, le défilement du document est bloqué et le focus reste dans la fenêtre. Le passage panier → aperçu checkout déplace le focus dans le nouvel écran ; la fermeture le rend au déclencheur. Une navigation privilégie le focus du contenu principal.
+- Aucun faux réseau social ni moyen de paiement actif n’est affiché. Le footer indique qu’aucun paiement réel n’est effectué dans la démonstration.
+
+Vérification effectuée sur l’aperçu compilé : liens, recherche, clavier, ouverture/fermeture, conservation du panier, menu mobile et absence de débordement horizontal à 320, 390, 768, 1024 et 1440 px. Les tests de `navigation.test.js` contrôlent les destinations disponibles et les statuts en préparation.

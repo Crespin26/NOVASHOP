@@ -79,6 +79,8 @@ L’environnement Compose utilise le serveur de développement PHP et des identi
 
 Le panier et les favoris restent dans le stockage local du navigateur. Le formulaire newsletter simule uniquement une inscription, sans transmission ni conservation d’adresse. Les vues compte et paiement indiquent les intégrations encore nécessaires.
 
+L’en-tête et le footer partagent leur navigation, avec menus ordinateur/mobile, recherche, favoris et accès au tiroir panier. Les destinations encore absentes sont indiquées « Bientôt » ; le compte reste un aperçu.
+
 Les pages publiques disposent d’URL directes : `/`, `/boutique`, `/favoris` et `/produits/casque-sans-fil-studio`. Exemple de filtres partageables : `/boutique?category=high-tech&sort=price-up`. Les produits inconnus et chemins inexistants affichent une page introuvable.
 
 Le routage ne remplace pas les autorisations Laravel. Compte et checkout restent des aperçus sans authentification ni paiement ; aucune zone administrateur n’est ouverte par le routeur. Voir les [mesures de sécurité et limites du routage](docs/security-and-quality.md#routage-public-et-stockage-local).
