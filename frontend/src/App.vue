@@ -26,6 +26,7 @@ function toggleFavorite(id) {
   if (!products.some(product => product.id === id)) return
   favorites.value = favorites.value.includes(id) ? favorites.value.filter(value => value !== id) : [...favorites.value, id]
 }
+function clearFavorites() { favorites.value = []; notify('Votre liste de favoris a été vidée.') }
 function add(candidate, amount = 1) {
   const product = products.find(item => item.id === candidate?.id)
   if (!product || !Number.isSafeInteger(amount) || amount <= 0) return
@@ -81,7 +82,7 @@ function subscribe() {
   if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { newsletterError.value = 'Saisissez une adresse e-mail valide.'; return }
   newsletterError.value = ''; subscribed.value = true
 }
-provide(storefrontKey, { favorites, toggleFavorite, add, browse, home })
+provide(storefrontKey, { favorites, toggleFavorite, clearFavorites, add, browse, home })
 onMounted(() => document.addEventListener('keydown', keyboard))
 onUnmounted(() => { document.removeEventListener('keydown', keyboard); clearTimeout(toastTimer); document.body.style.overflow = '' })
 </script>

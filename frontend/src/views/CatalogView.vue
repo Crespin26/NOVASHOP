@@ -10,7 +10,15 @@ import { readCatalogQuery, makeCatalogQuery, canonicalQuery, catalogLocation, fi
 import { parseEuroAmount, euroInput, paginateProducts } from '../catalog.js'
 
 const route = useRoute(), router = useRouter()
-const { favorites, toggleFavorite, add } = useStorefront()
+const { favorites, toggleFavorite, clearFavorites, add } = useStorefront()
+const confirmClear = ref(false)
+const clearButton = ref(null)
+const savedProducts = computed(() => filteredProducts({ favorites: favorites.value }))
+const savedTotal = computed(() => savedProducts.value.reduce((sum, item) => sum + item.price, 0))
+const unavailableCount = computed(() => savedProducts.value.filter(item => !item.stock).length)
+async function emptyFavorites() { clearFavorites(); confirmClear.value = false; await nextTick(); document.getElementById('catalog-results')?.focus({ preventScroll: true }) }
+async function cancelClear() { confirmClear.value = false; await nextTick(); clearButton.value?.focus() }
+watch(() => [route.fullPath, favorites.value.length], () => { confirmClear.value = false })
 const activeCategory = computed(() => route.name === 'category' ? findCategoryBySlug(route.params.slug) : null)
 const unknownCategory = computed(() => route.name === 'category' && !activeCategory.value)
 const filters = computed(() => ({ ...readCatalogQuery(route.query), ...(activeCategory.value ? { category: activeCategory.value.name } : {}) }))
@@ -84,6 +92,11 @@ const activeFilters = computed(() => {
   <section v-else class="container catalog-page section">
     <nav class="breadcrumb" aria-label="Fil d’Ariane"><RouterLink :to="{name:'home'}">Accueil</RouterLink><ChevronRight :size="13"/><template v-if="activeCategory"><RouterLink :to="{name:'catalog'}">La boutique</RouterLink><ChevronRight :size="13"/></template><span aria-current="page">{{breadcrumb}}</span></nav>
     <header class="catalog-heading" :class="{'has-category':activeCategory}"><div><span class="eyebrow coral">{{activeCategory?'VOTRE UNIVERS NOVASHOP':'LA SÉLECTION NOVASHOP'}}</span><h1>{{title}}</h1><p>{{description}}</p></div><img v-if="activeCategory" :src="image(activeCategory.image,600)" alt="" width="600" height="400"/></header>
+    <section v-if="route.name==='favorites' && favorites.length" class="favorites-summary" aria-label="Récapitulatif des favoris">
+      <div><strong>{{favorites.length}} coup(s) de cœur · {{money(savedTotal)}}</strong><p>Total indicatif pour un exemplaire de chaque produit, hors livraison. {{unavailableCount}} produit(s) indisponible(s). Les favoris ne réservent pas de stock.</p></div>
+      <button v-if="!confirmClear" ref="clearButton" class="text-link" type="button" @click="confirmClear=true">Vider mes favoris</button>
+      <div v-else class="favorites-confirm"><p id="clear-favorites-question">Supprimer tous vos favoris de ce navigateur ?</p><button class="button button-dark" type="button" aria-describedby="clear-favorites-question" @click="emptyFavorites">Confirmer la suppression</button><button class="text-link" type="button" @click="cancelClear">Annuler</button></div>
+    </section>
     <div class="catalog-workspace">
       <aside class="catalog-filter-column"><details class="catalog-filters" :open="filtersOpen" @toggle="filtersOpen=$event.target.open"><summary><SlidersHorizontal :size="18"/><span>Filtres et catégories</span><small v-if="activeFilters.length">{{activeFilters.length}}</small><ChevronRight :size="15"/></summary><div class="catalog-filter-body">
         <nav aria-label="Catégories de la sélection"><h2>Les univers</h2><RouterLink v-for="category in categories" :key="category.slug" :to="categoryTarget(category)" :class="{'is-selected':filters.category===category.name}" :aria-current="filters.category===category.name?'page':undefined"><span>{{category.name}}</span><small>{{categoryCount(category)}}</small></RouterLink></nav>

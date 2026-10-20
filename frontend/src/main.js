@@ -9,3 +9,5 @@ const router = createStoreRouter()
 const app = createApp(App)
 app.use(router)
 router.isReady().then(() => app.mount('#app'))
+
+import './product.css'

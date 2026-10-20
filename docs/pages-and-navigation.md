@@ -293,7 +293,7 @@ Pour chaque ID de l’inventaire :
 
 Le point 2 est une première passe de navigation globale. Les liens qui dépendent des points suivants seront activés avec leurs pages, puis une revue intégrale en point 13 vérifiera l’absence de destination provisoire. Définir les contrats de données de chaque écran avant de finaliser ses formulaires frontend évitera des divergences avec les API.
 
-Les points 1 à 4 sont réalisés pour le périmètre frontend disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
+Les points 1 à 5 sont réalisés pour le périmètre frontend disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
 
 Les catégories sont maintenant reliées à leurs pages dédiées, y compris depuis l’accueil, l’en-tête, le footer et les fiches produit. Les pages panier, compte, assistance et informations légales ne sont pas encore implémentées. Leur activation reste suivie avec les lots concernés ; cela ne bloque pas la première passe du point 2.
 
@@ -301,4 +301,8 @@ Le point 3 relie l’accueil à des sélections cohérentes, aux produits des ba
 
 Le point 4 ajoute prix, disponibilité et pagination aux listes, ainsi que les pages catégorie dédiées et leurs états introuvables. Tous ces éléments reposent encore sur des données locales fictives.
 
-Prochain travail : point 5, enrichissement des fiches produits et des favoris.
+Le point 5 enrichit chaque fiche avec un texte propre à la référence, un visuel agrandissable au clavier, un état d’échec de chargement, des informations dépliables et des suggestions de la même catégorie (disponibles en premier). Le changement de produit réinitialise quantité et agrandissement. Les références sont uniques : aucun sélecteur de variante fictif n’est proposé. Les images, avis, stocks et prix restent illustratifs ; les caractéristiques, garanties et conditions commerciales devront être validées avant une vente réelle.
+
+Les favoris conservent leurs filtres, tris et pagination. Un récapitulatif indique le total hors livraison pour un exemplaire par référence et le nombre de produits indisponibles. La liste peut être vidée après confirmation explicite ; seuls les identifiants connus restent stockés localement. L’ajout au panier passe toujours par le produit canonique et les limites de stock existantes. Ces contrôles frontend devront être reproduits et imposés par les API.
+
+Prochain travail : point 6, page panier et cohérence avec le tiroir.
