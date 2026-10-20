@@ -24,7 +24,7 @@ export const footerNavigation = [
   { title: 'Votre NovaShop', items: [
     { label: 'Aperçu du compte', action: 'account' },
     { label: 'Mes favoris', to: { name: 'favorites' } },
-    { label: 'Ouvrir mon panier', action: 'cart' },
+    { label: 'Mon panier', to: { name: 'cart' } },
     { label: 'Mes commandes', pending: true },
   ] },
   { title: 'Aide & NovaShop', items: [

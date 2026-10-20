@@ -9,7 +9,7 @@ Ce document est la référence de travail pour les pages, les URL et les destina
 - Hypothèse de départ : produits physiques, compte requis pour commander, une devise principale. Le code de démonstration utilise EUR ; devise commerciale, variantes, pays, taxes, livraison et politique de retour restent à définir avant les modules concernés.
 - Le catalogue, les prix, les avis, les stocks et les montants affichés sont fictifs. Une fonctionnalité frontend n’est considérée comme complète commercialement qu’après connexion et validation serveur.
 
-État observé dans `frontend/src/router/index.js` : huit routes nommées sont déclarées (`home`, `catalog`, `category`, `promotions`, `new-arrivals`, `favorites`, `product`, `not-found`). Le panier est un tiroir partagé ; compte et checkout sont des fenêtres explicatives. Les autres destinations de ce document restent à créer. Les pages publiques existantes restent à enrichir selon leurs critères ci-dessous.
+État observé dans `frontend/src/router/index.js` : neuf routes nommées sont déclarées (`home`, `catalog`, `category`, `promotions`, `new-arrivals`, `favorites`, `product`, `cart`, `not-found`). Le panier dispose d’une page `/panier` et d’un tiroir partagé ; compte et checkout sont des fenêtres explicatives. Les autres destinations de ce document restent à créer. Les pages publiques existantes restent à enrichir selon leurs critères ci-dessous.
 
 ### Lecture des statuts et accès
 
@@ -35,7 +35,7 @@ Les noms de routes ci-dessous sont des cibles stables pour les futurs liens nomm
 | PUB-05 | Nouveautés | `/nouveautes` | `new-arrivals` | Prototype | Produits classés selon leur date de publication → produit |
 | PUB-06 | Produit | `/produits/:slug` | `product` | Prototype | Images, prix, description, disponibilité, options éventuelles → panier ou favoris |
 | PUB-07 | Favoris | `/favoris` | `favorites` | Prototype | Liste sauvegardée, retrait, achat et état vide → produit ou boutique |
-| PUB-08 | Panier | `/panier` | `cart` | À créer | Articles, quantités, frais estimés et total → identification ou checkout |
+| PUB-08 | Panier | `/panier` | `cart` | Prototype | Articles, quantités, frais estimés et total → identification ou checkout |
 | PUB-09 | À propos | `/a-propos` | `about` | À créer | Présentation de l’entreprise et engagements vérifiables → boutique ou contact |
 | PUB-10 | Contact | `/contact` | `contact` | À créer | Coordonnées réelles, formulaire, confirmation et erreur d’envoi |
 | PUB-11 | Aide / FAQ | `/aide` | `help` | À créer | Questions classées → livraison, retours, compte ou contact |
@@ -129,7 +129,7 @@ L’administration aura un layout distinct : navigation latérale, compte couran
 | Compte visiteur | `login` | Remplacer la fenêtre explicative une fois la page disponible |
 | Compte connecté | `account` | À activer sur la base de la session serveur |
 | Favoris | `favorites` | Liens disponibles dans l’en-tête, le menu mobile et le footer |
-| Panier | Ouvrir le tiroir partagé | Tiroir disponible aux trois emplacements ; lien vers la page panier à ajouter au point 6 |
+| Panier | Ouvrir le tiroir partagé | Tiroir dans l’en-tête ; lien « Voir mon panier » vers `/panier`, également accessible dans le footer |
 | Menu mobile | Ouvrir / fermer les mêmes destinations que sur ordinateur | Menu mobile complet sur les destinations disponibles ; clavier et fermeture vérifiés |
 
 ### Navigation principale et catégories
@@ -293,9 +293,9 @@ Pour chaque ID de l’inventaire :
 
 Le point 2 est une première passe de navigation globale. Les liens qui dépendent des points suivants seront activés avec leurs pages, puis une revue intégrale en point 13 vérifiera l’absence de destination provisoire. Définir les contrats de données de chaque écran avant de finaliser ses formulaires frontend évitera des divergences avec les API.
 
-Les points 1 à 5 sont réalisés pour le périmètre frontend disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
+Les points 1 à 6 sont réalisés pour le périmètre frontend disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
 
-Les catégories sont maintenant reliées à leurs pages dédiées, y compris depuis l’accueil, l’en-tête, le footer et les fiches produit. Les pages panier, compte, assistance et informations légales ne sont pas encore implémentées. Leur activation reste suivie avec les lots concernés ; cela ne bloque pas la première passe du point 2.
+Les catégories sont maintenant reliées à leurs pages dédiées, y compris depuis l’accueil, l’en-tête, le footer et les fiches produit. Les pages compte, assistance et informations légales ne sont pas encore implémentées. Leur activation reste suivie avec les lots concernés ; cela ne bloque pas la première passe du point 2.
 
 Le point 3 relie l’accueil à des sélections cohérentes, aux produits des bannières et aux listes promotions/nouveautés désormais disponibles. Les prix et réductions proviennent du même catalogue de démonstration ; les nouveautés reposent sur ses dates de publication fictives.
 
@@ -305,4 +305,6 @@ Le point 5 enrichit chaque fiche avec un texte propre à la référence, un visu
 
 Les favoris conservent leurs filtres, tris et pagination. Un récapitulatif indique le total hors livraison pour un exemplaire par référence et le nombre de produits indisponibles. La liste peut être vidée après confirmation explicite ; seuls les identifiants connus restent stockés localement. L’ajout au panier passe toujours par le produit canonique et les limites de stock existantes. Ces contrôles frontend devront être reproduits et imposés par les API.
 
-Prochain travail : point 6, page panier et cohérence avec le tiroir.
+Le point 6 ajoute `/panier`, ses liens depuis le footer et le tiroir, les lignes modifiables, le retrait individuel et la suppression globale avec confirmation. Page et tiroir partagent le même état, les mêmes limites de stock et le calcul centralisé en centimes (livraison fictive à 4,90 €, offerte dès 100 €, aucun frais pour un panier vide). La restauration locale ignore les prix fournis par le navigateur et utilise le catalogue canonique ; aucune donnée personnelle ni bancaire n’est enregistrée. L’action de commande ouvre encore une fenêtre explicative, sans créer de commande ni collecter de paiement.
+
+Prochain travail : point 7, authentification et espace compte frontend.

@@ -79,7 +79,7 @@ L’environnement Compose utilise le serveur de développement PHP et des identi
 
 Le panier et les favoris restent dans le stockage local du navigateur. Le formulaire newsletter simule uniquement une inscription, sans transmission ni conservation d’adresse. Les vues compte et paiement indiquent les intégrations encore nécessaires.
 
-L’en-tête et le footer partagent leur navigation, avec menus ordinateur/mobile, recherche, favoris et accès au tiroir panier. Les destinations encore absentes sont indiquées « Bientôt » ; le compte reste un aperçu.
+L’en-tête et le footer partagent leur navigation, avec menus ordinateur/mobile, recherche, favoris et accès au tiroir panier. La page `/panier`, accessible depuis le tiroir et le footer, partage ses quantités et ses totaux ; elle permet de retirer les articles ou de vider le panier après confirmation. Les destinations encore absentes sont indiquées « Bientôt » ; le compte reste un aperçu.
 
 Les pages publiques disposent d’URL directes : `/`, `/boutique`, `/categories/high-tech`, `/promotions`, `/nouveautes`, `/favoris` et `/produits/casque-sans-fil-studio`. Exemples de liens partageables : `/categories/high-tech?min=5000&max=10000&stock=in-stock` (prix en centimes) et `/boutique?page=2`. Les listes affichent 8 produits par page. Les formulaires de prix acceptent les euros avec virgule ou point. Deux produits fictifs sont en rupture pour vérifier ce parcours. Les produits inconnus et chemins inexistants affichent une page introuvable.
 

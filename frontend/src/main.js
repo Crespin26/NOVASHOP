@@ -11,3 +11,4 @@ app.use(router)
 router.isReady().then(() => app.mount('#app'))
 
 import './product.css'
+import './cart.css'

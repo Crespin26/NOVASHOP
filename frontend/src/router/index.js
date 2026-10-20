@@ -8,6 +8,7 @@ export const routes = [
   { path: '/categories/:slug', name: 'category', component: () => import('../views/CatalogView.vue'), meta: { title: 'Catégorie' } },
   { path: '/promotions', name: 'promotions', component: () => import('../views/CatalogView.vue'), meta: { title: 'Les promotions' } },
   { path: '/nouveautes', name: 'new-arrivals', component: () => import('../views/CatalogView.vue'), meta: { title: 'Les nouveautés' } },
+  { path: '/panier', name: 'cart', component: () => import('../views/CartView.vue'), meta: { title: 'Mon panier' } },
   { path: '/favoris', name: 'favorites', component: () => import('../views/CatalogView.vue'), meta: { title: 'Mes favoris' } },
   { path: '/produits/:slug', name: 'product', component: () => import('../views/ProductView.vue'), meta: { title: 'Produit' } },
   { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('../views/NotFoundView.vue'), meta: { title: 'Page introuvable' } },
