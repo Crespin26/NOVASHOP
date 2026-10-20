@@ -9,7 +9,7 @@ Ce document est la référence de travail pour les pages, les URL et les destina
 - Hypothèse de départ : produits physiques, compte requis pour commander, une devise principale. Le code de démonstration utilise EUR ; devise commerciale, variantes, pays, taxes, livraison et politique de retour restent à définir avant les modules concernés.
 - Le catalogue, les prix, les avis, les stocks et les montants affichés sont fictifs. Une fonctionnalité frontend n’est considérée comme complète commercialement qu’après connexion et validation serveur.
 
-État observé dans `frontend/src/router/index.js` : neuf routes nommées sont déclarées (`home`, `catalog`, `category`, `promotions`, `new-arrivals`, `favorites`, `product`, `cart`, `not-found`). Le panier dispose d’une page `/panier` et d’un tiroir partagé ; compte et checkout sont des fenêtres explicatives. Les autres destinations de ce document restent à créer. Les pages publiques existantes restent à enrichir selon leurs critères ci-dessous.
+État observé dans `frontend/src/router/index.js` : les routes publiques incluent désormais aussi connexion, inscription, récupération, réinitialisation explicative et espace compte de démonstration. Le panier dispose d’une page `/panier` et d’un tiroir partagé ; le checkout reste une fenêtre explicative. Les autres destinations de ce document restent à créer. Les pages publiques existantes restent à enrichir selon leurs critères ci-dessous.
 
 ### Lecture des statuts et accès
 
@@ -53,15 +53,15 @@ Tous les écrans de cette table sont publics. `PUB-03`, `PUB-04` et `PUB-05` ré
 
 | ID | Page | Chemin | Nom de route cible | Accès cible | État / contenu |
 | --- | --- | --- | --- | --- | --- |
-| AUTH-01 | Connexion | `/connexion` | `login` | Public, destinée au visiteur | À créer ; connexion, lien inscription et mot de passe oublié |
-| AUTH-02 | Inscription | `/inscription` | `register` | Public, destinée au visiteur | À créer ; création du compte et informations nécessaires |
-| AUTH-03 | Mot de passe oublié | `/mot-de-passe-oublie` | `forgot-password` | Public | À créer ; réponse générique après demande de lien |
-| AUTH-04 | Nouveau mot de passe | `/reinitialiser-mot-de-passe/:token` | `reset-password` | Lien temporaire validé par le serveur | À créer ; token à usage unique et contexte minimal exigé par l’API |
-| AUTH-05 | Vérification e-mail | `/verification-email` | `verify-email` | Client | À créer ; état de vérification et renvoi limité ; le lien signé sera traité par Laravel |
-| CLI-01 | Résumé du compte | `/compte` | `account` | Client | À créer ; raccourcis profil, adresses et commandes |
-| CLI-02 | Profil et sécurité | `/compte/profil` | `account-profile` | Client | À créer ; profil, mot de passe et demande de suppression du compte |
-| CLI-03 | Adresses | `/compte/adresses` | `account-addresses` | Client propriétaire | À créer ; liste, création, modification, suppression et adresse par défaut |
-| CLI-04 | Mes commandes | `/compte/commandes` | `account-orders` | Client propriétaire | À créer ; historique, filtres et pagination |
+| AUTH-01 | Connexion | `/connexion` | `login` | Public, destinée au visiteur | Prototype public de démonstration ; connexion, lien inscription et mot de passe oublié |
+| AUTH-02 | Inscription | `/inscription` | `register` | Public, destinée au visiteur | Prototype public de démonstration ; création du compte et informations nécessaires |
+| AUTH-03 | Mot de passe oublié | `/mot-de-passe-oublie` | `forgot-password` | Public | Prototype public de démonstration ; réponse générique après demande de lien |
+| AUTH-04 | Nouveau mot de passe | `/reinitialiser-mot-de-passe/:token` | `reset-password` | Lien temporaire validé par le serveur | Prototype public de démonstration ; token à usage unique et contexte minimal exigé par l’API |
+| AUTH-05 | Vérification e-mail | `/verification-email` | `verify-email` | Client | Prototype public de démonstration ; état de vérification et renvoi limité ; le lien signé sera traité par Laravel |
+| CLI-01 | Résumé du compte | `/compte` | `account` | Client | Prototype public de démonstration ; raccourcis profil, adresses et commandes |
+| CLI-02 | Profil et sécurité | `/compte/profil` | `account-profile` | Client | Prototype public de démonstration ; profil, mot de passe et demande de suppression du compte |
+| CLI-03 | Adresses | `/compte/adresses` | `account-addresses` | Client propriétaire | Prototype public de démonstration ; liste, création, modification, suppression et adresse par défaut |
+| CLI-04 | Mes commandes | `/compte/commandes` | `account-orders` | Client propriétaire | Prototype public de démonstration ; historique, filtres et pagination |
 | CLI-05 | Détail de commande | `/compte/commandes/:reference` | `account-order` | Client propriétaire | À créer ; instantanés des articles, adresse, montants et actions autorisées |
 | CLI-06 | Suivi | `/compte/commandes/:reference/suivi` | `account-order-tracking` | Client propriétaire | À créer ; étapes, transporteur et numéro de suivi disponible |
 | CLI-07 | Demande de retour | `/compte/commandes/:reference/retour` | `account-order-return` | Client propriétaire, commande admissible | À créer ; articles, motif, pièces utiles et confirmation |
@@ -293,9 +293,9 @@ Pour chaque ID de l’inventaire :
 
 Le point 2 est une première passe de navigation globale. Les liens qui dépendent des points suivants seront activés avec leurs pages, puis une revue intégrale en point 13 vérifiera l’absence de destination provisoire. Définir les contrats de données de chaque écran avant de finaliser ses formulaires frontend évitera des divergences avec les API.
 
-Les points 1 à 6 sont réalisés pour le périmètre frontend disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
+Les points 1 à 7 sont réalisés pour le périmètre frontend disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
 
-Les catégories sont maintenant reliées à leurs pages dédiées, y compris depuis l’accueil, l’en-tête, le footer et les fiches produit. Les pages compte, assistance et informations légales ne sont pas encore implémentées. Leur activation reste suivie avec les lots concernés ; cela ne bloque pas la première passe du point 2.
+Les catégories sont maintenant reliées à leurs pages dédiées, y compris depuis l’accueil, l’en-tête, le footer et les fiches produit. Les pages assistance et informations légales ne sont pas encore implémentées. Leur activation reste suivie avec les lots concernés ; cela ne bloque pas la première passe du point 2.
 
 Le point 3 relie l’accueil à des sélections cohérentes, aux produits des bannières et aux listes promotions/nouveautés désormais disponibles. Les prix et réductions proviennent du même catalogue de démonstration ; les nouveautés reposent sur ses dates de publication fictives.
 
@@ -307,4 +307,8 @@ Les favoris conservent leurs filtres, tris et pagination. Un récapitulatif indi
 
 Le point 6 ajoute `/panier`, ses liens depuis le footer et le tiroir, les lignes modifiables, le retrait individuel et la suppression globale avec confirmation. Page et tiroir partagent le même état, les mêmes limites de stock et le calcul centralisé en centimes (livraison fictive à 4,90 €, offerte dès 100 €, aucun frais pour un panier vide). La restauration locale ignore les prix fournis par le navigateur et utilise le catalogue canonique ; aucune donnée personnelle ni bancaire n’est enregistrée. L’action de commande ouvre encore une fenêtre explicative, sans créer de commande ni collecter de paiement.
 
-Prochain travail : point 7, authentification et espace compte frontend.
+Le point 7 ajoute les formulaires `/connexion`, `/inscription`, `/mot-de-passe-oublie`, l’état explicatif `/reinitialiser-mot-de-passe/:token` et les vues publiques de démonstration `/compte`, `/compte/profil`, `/compte/adresses`, `/compte/commandes`, `/verification-email`. Le lien compte de l’en-tête conduit à la connexion ; le footer permet de visiter l’aperçu directement. Les formulaires valident localement les champs, puis effacent les données : aucune session, aucun compte, aucun e-mail envoyé. La récupération utilise une réponse générique ; aucun token n’est validé côté client. La réinitialisation réelle et le renvoi de vérification restent désactivés en attente du serveur.
+
+Profil et adresses fictives sont modifiables en mémoire seulement ; création, édition, retrait et choix d’une adresse par défaut sont limités à cet aperçu (5 adresses maximum). L’historique est vide ; détails et suivi seront traités au point 8. Aucun stockage de mot de passe ni donnée personnelle, aucune pseudo-authentification dans localStorage. Les règles serveur de session Sanctum, CSRF, autorisations par propriétaire, limitation des tentatives, vérification e-mail et jetons temporaires seront implémentées au point 11. Ces écrans publics ne constituent pas une protection d’accès.
+
+Prochain travail : point 8, checkout et suivi frontend.

@@ -12,3 +12,4 @@ router.isReady().then(() => app.mount('#app'))
 
 import './product.css'
 import './cart.css'
+import './account.css'

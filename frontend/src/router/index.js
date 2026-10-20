@@ -3,6 +3,16 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { canonicalQuery, findProductBySlug, findCategoryBySlug, sameQuery } from './policy.js'
 
 export const routes = [
+  { path: '/connexion', name: 'login', component: () => import('../views/AuthView.vue'), meta: { title: 'Connexion' } },
+  { path: '/inscription', name: 'register', component: () => import('../views/AuthView.vue'), meta: { title: 'Inscription' } },
+  { path: '/mot-de-passe-oublie', name: 'forgot-password', component: () => import('../views/AuthView.vue'), meta: { title: 'Mot de passe oublié' } },
+  { path: '/reinitialiser-mot-de-passe/:token', name: 'reset-password', component: () => import('../views/AuthView.vue'), meta: { title: 'Nouveau mot de passe' } },
+  { path: '/verification-email', name: 'verify-email', component: () => import('../views/AccountView.vue'), meta: { title: 'Vérification e-mail' } },
+  { path: '/compte', name: 'account', component: () => import('../views/AccountView.vue'), meta: { title: 'Mon compte' } },
+  { path: '/compte/profil', name: 'account-profile', component: () => import('../views/AccountView.vue'), meta: { title: 'Mon profil' } },
+  { path: '/compte/adresses', name: 'account-addresses', component: () => import('../views/AccountView.vue'), meta: { title: 'Mes adresses' } },
+  { path: '/compte/commandes', name: 'account-orders', component: () => import('../views/AccountView.vue'), meta: { title: 'Mes commandes' } },
+
   { path: '/', name: 'home', component: () => import('../views/HomeView.vue'), meta: { title: 'Vos envies, un nouvel univers.' } },
   { path: '/boutique', name: 'catalog', component: () => import('../views/CatalogView.vue'), meta: { title: 'La boutique' } },
   { path: '/categories/:slug', name: 'category', component: () => import('../views/CatalogView.vue'), meta: { title: 'Catégorie' } },

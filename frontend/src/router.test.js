@@ -7,7 +7,7 @@ import { restoreCart, restoreFavorites } from './storage.js'
 
 test('public routes and catch-all resolve without a client-side private area', () => {
   const router = createStoreRouter(createMemoryHistory())
-  for (const [path, name] of [['/', 'home'], ['/boutique', 'catalog'], ['/favoris', 'favorites'], ['/produits/montre-essential', 'product'], ['/admin', 'not-found'], ['/compte/commandes', 'not-found'], ['/inconnu', 'not-found']]) {
+  for (const [path, name] of [['/', 'home'], ['/boutique', 'catalog'], ['/favoris', 'favorites'], ['/produits/montre-essential', 'product'], ['/admin', 'not-found'], ['/compte/commandes', 'account-orders'], ['/inconnu', 'not-found']]) {
     assert.equal(router.resolve(path).name, name)
   }
 })

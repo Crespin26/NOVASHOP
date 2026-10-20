@@ -70,7 +70,7 @@ onUnmounted(() => {
         <button class="site-search-submit" type="submit" aria-label="Rechercher"><span>Rechercher</span><ArrowRight :size="16"/></button>
       </form>
       <div class="site-header-actions">
-        <button type="button" class="site-header-icon site-account" aria-label="Aperçu de mon compte" aria-haspopup="dialog" @click="action('account')"><UserRound :size="22"/><span>Mon compte<small>Aperçu</small></span></button>
+        <button type="button" class="site-header-icon site-account" aria-label="Aperçu de mon compte" @click="action('account')"><UserRound :size="22"/><span>Mon compte<small>Aperçu</small></span></button>
         <RouterLink class="site-header-icon" :to="{ name:'favorites' }" aria-label="Mes favoris" aria-describedby="site-favorites-count" :aria-current="route.name==='favorites'?'page':undefined" @click="closePanels()"><Heart :size="22"/><span v-if="favoritesCount" class="site-count" aria-hidden="true">{{favoritesCount}}</span><span id="site-favorites-count" class="sr-only">{{favoritesCount}} favori{{favoritesCount>1?'s':''}}</span></RouterLink>
         <span class="site-action-divider" aria-hidden="true"></span>
         <button type="button" class="site-header-icon" aria-label="Ouvrir le panier" aria-describedby="site-cart-count" aria-haspopup="dialog" @click="action('cart')"><ShoppingBag :size="22"/><span class="site-count" aria-hidden="true">{{count}}</span><span id="site-cart-count" class="sr-only">{{count}} article{{count>1?'s':''}}</span></button>

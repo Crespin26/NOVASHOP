@@ -77,7 +77,7 @@ make down        # Arrête les services et conserve les données
 
 L’environnement Compose utilise le serveur de développement PHP et des identifiants locaux ; il est destiné au développement. Le déploiement de production sera configuré séparément, avec HTTPS, secrets propres à l’hébergement et débogage désactivé.
 
-Le panier et les favoris restent dans le stockage local du navigateur. Le formulaire newsletter simule uniquement une inscription, sans transmission ni conservation d’adresse. Les vues compte et paiement indiquent les intégrations encore nécessaires.
+Le panier et les favoris restent dans le stockage local du navigateur. Le formulaire newsletter simule uniquement une inscription, sans transmission ni conservation d’adresse. Les formulaires de connexion, inscription et récupération sont des démonstrations sans transmission ni stockage des données saisies. L’espace compte public présente un profil et des adresses fictifs modifiables en mémoire seulement. La réinitialisation, la vérification e-mail et le paiement indiquent les intégrations serveur encore nécessaires.
 
 L’en-tête et le footer partagent leur navigation, avec menus ordinateur/mobile, recherche, favoris et accès au tiroir panier. La page `/panier`, accessible depuis le tiroir et le footer, partage ses quantités et ses totaux ; elle permet de retirer les articles ou de vider le panier après confirmation. Les destinations encore absentes sont indiquées « Bientôt » ; le compte reste un aperçu.
 

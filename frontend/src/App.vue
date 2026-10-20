@@ -104,13 +104,13 @@ onUnmounted(() => { document.removeEventListener('keydown', keyboard); clearTime
 <div class="storefront-shell" :inert="overlay ? true : undefined">
 <DevBackendStatus v-if="isDevelopment"/>
 <a class="skip-link" href="#main">Aller au contenu</a>
-<StoreHeader :count="count" :favorites-count="favorites.length" :overlay-open="overlay" @cart="cartOpen=true" @account="account=true"/>
+<StoreHeader :count="count" :favorites-count="favorites.length" :overlay-open="overlay" @cart="cartOpen=true" @account="router.push({name:'login'})"/>
 <main id="main" tabindex="-1">
 <RouterView/>
 
 <section class="newsletter"><div class="container newsletter-inner"><div><span class="eyebrow">UN PEU DE NOVA DANS VOTRE BOÎTE MAIL</span><h2>Les bonnes nouvelles se partagent<span>✦</span></h2><p>Nouveautés, inspirations et jolies découvertes. Tout simplement.</p></div><form @submit.prevent="subscribe" novalidate><div class="newsletter-input"><Mail :size="18"/><input v-model="email" type="email" aria-label="Votre adresse e-mail" placeholder="Votre adresse e-mail" :disabled="subscribed" required/><button :disabled="subscribed" :aria-label="subscribed?'Inscription simulée terminée':'Simuler l’inscription'">{{subscribed?'C’est noté !':'Je m’inscris'}}<Check v-if="subscribed" :size="17"/><ArrowRight v-else :size="17"/></button></div><small :class="{'form-error':newsletterError}" aria-live="polite">{{newsletterError||(subscribed?'Démonstration : aucune adresse n’a été envoyée ni enregistrée.':'Aperçu du formulaire · Aucun e-mail envoyé dans cette démo.')}}</small></form></div></section>
 </main>
-<StoreFooter @cart="cartOpen=true" @account="account=true"/>
+<StoreFooter @cart="cartOpen=true" @account="router.push({name:'login'})"/>
 </div>
 <Transition name="toast"><div v-if="toast" class="toast-message" role="status"><Check :size="18"/>{{toast}}</div></Transition>
 <Transition name="overlay"><div v-if="overlay" class="overlay" @click.self="closeOverlays">
