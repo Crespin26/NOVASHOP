@@ -45,12 +45,12 @@ watch(() => route.params.slug, () => { quantity.value = 1; zoomed.value = false;
           <button class="button button-dark" :disabled="!product.stock" @click="add(product,quantity)">{{product.stock?'Ajouter au panier':'Indisponible'}} <ShoppingBag :size="17"/></button>
         </div>
         <button class="text-link" :aria-pressed="favorites.includes(product.id)" @click="toggleFavorite(product.id)"><Heart :size="17" :fill="favorites.includes(product.id)?'currentColor':'none'"/>{{favorites.includes(product.id)?'Dans mes favoris':'Garder dans mes favoris'}}</button>
-        <div class="modal-details"><span><Truck :size="17"/>Livraison offerte dès 100 €</span><span><ShieldCheck :size="17"/>Prix et stocks de démonstration</span></div>
+        <div class="modal-details"><span><Truck :size="17"/>Livraison offerte dès {{money(10000)}}</span><span><ShieldCheck :size="17"/>Prix et stocks de démonstration</span></div>
       </div>
     </article>
     <div class="product-information">
       <details open><summary>À propos de cette sélection</summary><dl><div><dt>Collection</dt><dd>{{product.category}}</dd></div><div><dt>Marque de démonstration</dt><dd>{{product.brand}}</dd></div><div><dt>Disponibilité indicative</dt><dd>{{product.stock}} exemplaire(s)</dd></div></dl><p>Les caractéristiques techniques, matières, tailles et garanties seront renseignées et validées avant la vente. Aucune variante n’est proposée dans cette démonstration.</p></details>
-      <details><summary>Livraison et retours</summary><p>Dans la simulation du panier : livraison à 4,90 €, offerte dès 100 € d’achats. Les délais, zones desservies et conditions de retour restent à définir avant l’ouverture de la boutique. Aucune commande réelle n’est passée.</p></details>
+      <details><summary>Livraison et retours</summary><p>Dans la simulation du panier : livraison à {{money(490)}}, offerte dès {{money(10000)}} d’achats. Les délais, zones desservies et conditions de retour restent à définir avant l’ouverture de la boutique. Aucune commande réelle n’est passée.</p></details>
       <details><summary>À propos des avis</summary><p>La note et le nombre d’avis sont fictifs. Il n’est pas encore possible de publier un avis ; cette fonction nécessitera une authentification et une modération côté serveur.</p></details>
     </div>
     <section v-if="suggestions.length" class="product-related" aria-labelledby="related-heading"><div class="product-related-heading"><div><span class="eyebrow coral">DANS LE MÊME UNIVERS</span><h2 id="related-heading">À découvrir aussi.</h2></div><RouterLink class="text-link" :to="categoryDestination(product.category)">Explorer la collection <ChevronRight :size="16"/></RouterLink></div><div class="product-grid"><ProductCard v-for="item in suggestions" :key="item.id" :product="item" :favorite="favorites.includes(item.id)" @favorite="toggleFavorite" @add="add"/></div></section>

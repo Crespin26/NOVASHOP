@@ -105,7 +105,7 @@ function keyboard(event) {
 }
 function subscribe() {
   if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { newsletterError.value = 'Saisissez une adresse e-mail valide.'; return }
-  newsletterError.value = ''; subscribed.value = true
+  newsletterError.value = ''; email.value = ''; subscribed.value = true
 }
 provide(storefrontKey, { favorites, toggleFavorite, clearFavorites, add, browse, home, cart, summary, change, removeLine, clearCart, beginCheckout, demoOrders, simulateOrder })
 onMounted(() => document.addEventListener('keydown', keyboard))
@@ -119,7 +119,7 @@ onUnmounted(() => { document.removeEventListener('keydown', keyboard); clearTime
 <main id="main" tabindex="-1">
 <RouterView/>
 
-<section v-if="!route.meta.adminDemo" class="newsletter"><div class="container newsletter-inner"><div><span class="eyebrow">UN PEU DE NOVA DANS VOTRE BOÎTE MAIL</span><h2>Les bonnes nouvelles se partagent<span>✦</span></h2><p>Nouveautés, inspirations et jolies découvertes. Tout simplement.</p></div><form @submit.prevent="subscribe" novalidate><div class="newsletter-input"><Mail :size="18"/><input v-model="email" type="email" aria-label="Votre adresse e-mail" placeholder="Votre adresse e-mail" :disabled="subscribed" required/><button :disabled="subscribed" :aria-label="subscribed?'Inscription simulée terminée':'Simuler l’inscription'">{{subscribed?'C’est noté !':'Je m’inscris'}}<Check v-if="subscribed" :size="17"/><ArrowRight v-else :size="17"/></button></div><small :class="{'form-error':newsletterError}" aria-live="polite">{{newsletterError||(subscribed?'Démonstration : aucune adresse n’a été envoyée ni enregistrée.':'Aperçu du formulaire · Aucun e-mail envoyé dans cette démo.')}}</small></form></div></section>
+<section v-if="!route.meta.adminDemo" class="newsletter"><div class="container newsletter-inner"><div><span class="eyebrow">UN PEU DE NOVA DANS VOTRE BOÎTE MAIL</span><h2>Les bonnes nouvelles se partagent<span>✦</span></h2><p>Nouveautés, inspirations et jolies découvertes. Tout simplement.</p></div><form @submit.prevent="subscribe" novalidate><div class="newsletter-input"><Mail :size="18"/><input v-model="email" type="email" aria-label="Votre adresse e-mail" placeholder="Votre adresse e-mail" :disabled="subscribed" required/><button :disabled="subscribed" :aria-label="subscribed?'Essai du formulaire terminé':'Tester le formulaire d’inscription'">{{subscribed?'Essai terminé':'Tester le formulaire'}}<Check v-if="subscribed" :size="17"/><ArrowRight v-else :size="17"/></button></div><small :class="{'form-error':newsletterError}" aria-live="polite">{{newsletterError||(subscribed?'Aucune inscription effectuée. Votre adresse n’a été ni envoyée ni enregistrée.':'Inscription bientôt disponible. Ce formulaire permet uniquement un essai, sans envoi ni inscription.')}}</small></form></div></section>
 </main>
 <StoreFooter v-if="!route.meta.adminDemo" @cart="cartOpen=true" @account="router.push({name:'login'})"/>
 </div>

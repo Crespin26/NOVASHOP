@@ -324,3 +324,17 @@ Le point 10 ajoute les 16 routes `/admin` dans un layout distinct sans en-tête 
 Toutes les données administratives sont fictives, isolées du catalogue public et conservées en mémoire seulement. La navigation directe est publique pour cet aperçu : aucun rôle local ni garde frontend ne constitue une autorisation réelle. Photos et variantes à l’édition, médiathèque sécurisée, pagination serveur, autorisations et audit persistant restent à intégrer avec les API. Les paramètres ne contiennent aucun secret d’infrastructure. Le journal local est limité à 100 entrées ; aucun compte administrateur réel ni déconnexion serveur n’est simulé.
 
 Prochain travail : point 11, backend métier.
+
+## Finalisation frontend avant les API — lot 1
+
+La présentation globale utilise désormais un bandeau de marque avec accès Aide et Contact, un compte intitulé « Mon compte » et un footer sans badges de démonstration. Le faux sélecteur statique « FR / EUR » est retiré ; seule la devise est indiquée en attendant le lot FR/EN. Les quatre services de l’accueil mènent aux pages livraison, favoris, retours et aide, sans promesse de paiement ou délai non validé. Le macaron promotionnel illustratif est retiré du carrousel. Les limites des opérations non connectées restent explicites dans leurs parcours ; la newsletter annonce un essai sans inscription et efface la saisie. Les textes de présentation partagés sont centralisés dans `frontend/src/presentation.js` pour la future traduction. Les données des produits, les conditions commerciales et les protections serveur ne sont pas modifiées par ce lot.
+
+Prochain lot de finalisation : sélection Français / English et traduction complète, distincte de la devise.
+
+### Préférences de devise et de langue
+
+Le bandeau propose EUR, FCFA BCEAO (XOF) et dollar américain (USD), ainsi que FR/EN. Les préférences sont bornées aux valeurs autorisées et conservées dans `nova-preferences`, sans donnée personnelle. Les prix de référence et calculs restent en centimes EUR ; le formateur commun convertit les montants affichés (produits, anciens prix, panier, livraison et simulations). Les saisies de budget et les prix d’administration restent explicitement en euros. XOF est arrondi à l’unité ; EUR et USD à deux décimales. Le total est converti à partir du total EUR : l’arrondi de chaque ligne peut créer un écart mineur avec leur somme affichée.
+
+Parité XOF : 1 EUR = 655,957 XOF (BCEAO). Instantané USD : 1 EUR = 1,1225 USD, taux de référence BCE du 19 octobre 2026, non actualisé automatiquement. La conversion indicative et sa date apparaissent après sélection ; ce n’est pas un engagement de règlement multidevise. Sources : https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.eu.html et https://ns2.bceao.int/fr/communique-presse/fausse-information-faisant-etat-dune-devaluation-du-franc-cfa.
+
+La préférence EN adapte le bandeau et les formats ; la traduction complète reste le lot 2 et cette limite est indiquée dans l’interface.

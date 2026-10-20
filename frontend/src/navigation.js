@@ -22,10 +22,10 @@ export const footerNavigation = [
     { label: 'Nouveautés', to: { name: 'new-arrivals' } },
   ] },
   { title: 'Votre NovaShop', items: [
-    { label: 'Compte de démonstration', to: { name: 'account' } },
+    { label: 'Mon compte', to: { name: 'login' } },
     { label: 'Mes favoris', to: { name: 'favorites' } },
     { label: 'Mon panier', to: { name: 'cart' } },
-    { label: 'Mes commandes · aperçu', to: { name: 'account-orders' } },
+    { label: 'Mes commandes', to: { name: 'account-orders' } },
   ] },
   { title: 'Aide & NovaShop', items: [
     { label: 'À propos', to: { name: 'about' } },

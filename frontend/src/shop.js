@@ -1,4 +1,4 @@
-export const money = value => new Intl.NumberFormat('fr-FR', {style:'currency',currency:'EUR',maximumFractionDigits:2}).format(value / 100)
+export { formatMoney as money } from './preferences.js'
 export const image = (id, width = 700) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=85`
 export const categories = [
  {name:'Tout découvrir',slug:'all',icon:'grid'},

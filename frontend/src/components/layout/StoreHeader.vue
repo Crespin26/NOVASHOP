@@ -4,6 +4,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { Search, ShoppingBag, Heart, UserRound, ArrowRight, ArrowUpRight, ChevronDown, ChevronRight, Menu, X, Truck, Grid2X2, Headphones, Shirt, House, Sparkles, Bike } from 'lucide-vue-next'
 import { categoryNavigation, mainNavigation } from '../../navigation.js'
 import { readCatalogQuery, makeCatalogQuery, findCategoryBySlug, categoryDestination } from '../../router/policy.js'
+import { currency, language, setCurrency, setLanguage, exchangeDate } from '../../preferences.js'
+import { presentation } from '../../presentation.js'
 import NavigationItem from './NavigationItem.vue'
 const props = defineProps({ count: { type: Number, default: 0 }, favoritesCount: { type: Number, default: 0 }, overlayOpen: Boolean })
 const emit = defineEmits(['cart', 'account'])
@@ -59,7 +61,8 @@ onUnmounted(() => {
 })
 </script>
 <template>
-  <div class="site-topbar"><div class="container site-topbar-inner"><span><Truck :size="14"/>Livraison offerte dès 100 € · Démo</span><span class="site-topbar-motto">De belles trouvailles. Tous les jours. <b>✦</b></span><span class="site-locale" aria-label="Français, prix en euros">Boutique de démonstration <i></i> FR / EUR</span></div></div>
+  <div class="site-topbar"><div class="container site-topbar-inner"><span><Sparkles :size="14"/>{{language==='en'?'Discover something for every wish.':presentation.topbar.invitation}}</span><span class="site-topbar-motto">{{language==='en'?'Lovely finds. Every day.':presentation.topbar.motto}} <b>✦</b></span><nav class="site-topbar-links" aria-label="Accès rapides"><RouterLink v-for="item in presentation.topbar.links" :key="item.label" :to="item.to">{{language==='en'?(item.label==='Aide'?'Help':'Contact'):item.label}}</RouterLink><label class="site-preference"><span class="sr-only">Langue / Language</span><select :value="language" aria-label="Langue / Language" @change="setLanguage($event.target.value)"><option value="fr">FR</option><option value="en">EN</option></select></label><label class="site-preference"><span class="sr-only">Devise / Currency</span><select :value="currency" aria-label="Devise / Currency" @change="setCurrency($event.target.value)"><option value="EUR">EUR €</option><option value="XOF">FCFA</option><option value="USD">USD $</option></select></label></nav></div></div>
+  <p v-if="currency!=='EUR' || language==='en'" class="site-preferences-note" role="status"><template v-if="currency!=='EUR'">{{language==='en'?'Indicative conversion. Base prices in EUR.':'Conversion indicative. Prix de référence en EUR.'}} <template v-if="currency==='USD'">{{language==='en'?'ECB rate dated':'Taux BCE du'}} {{exchangeDate}} : 1 EUR = 1.1225 USD.</template><template v-else>1 EUR = 655,957 FCFA (XOF).</template></template><span v-if="language==='en'"> English selected. Full page translations will be added in the next step.</span></p>
   <header ref="root" class="site-header">
     <div class="container site-header-main">
       <RouterLink class="logo" aria-label="NovaShop, accueil" :to="{ name: 'home' }" @click="closePanels()">nova<span>shop</span><i>✦</i></RouterLink>
@@ -70,7 +73,7 @@ onUnmounted(() => {
         <button class="site-search-submit" type="submit" aria-label="Rechercher"><span>Rechercher</span><ArrowRight :size="16"/></button>
       </form>
       <div class="site-header-actions">
-        <button type="button" class="site-header-icon site-account" aria-label="Aperçu de mon compte" @click="action('account')"><UserRound :size="22"/><span>Mon compte<small>Aperçu</small></span></button>
+        <button type="button" class="site-header-icon site-account" aria-label="Mon compte" @click="action('account')"><UserRound :size="22"/><span>Mon compte<small>Se connecter</small></span></button>
         <RouterLink class="site-header-icon" :to="{ name:'favorites' }" aria-label="Mes favoris" aria-describedby="site-favorites-count" :aria-current="route.name==='favorites'?'page':undefined" @click="closePanels()"><Heart :size="22"/><span v-if="favoritesCount" class="site-count" aria-hidden="true">{{favoritesCount}}</span><span id="site-favorites-count" class="sr-only">{{favoritesCount}} favori{{favoritesCount>1?'s':''}}</span></RouterLink>
         <span class="site-action-divider" aria-hidden="true"></span>
         <button type="button" class="site-header-icon" aria-label="Ouvrir le panier" aria-describedby="site-cart-count" aria-haspopup="dialog" @click="action('cart')"><ShoppingBag :size="22"/><span class="site-count" aria-hidden="true">{{count}}</span><span id="site-cart-count" class="sr-only">{{count}} article{{count>1?'s':''}}</span></button>
@@ -92,8 +95,8 @@ onUnmounted(() => {
       <div class="site-mobile-primary"><NavigationItem v-for="item in mainNavigation" :key="item.label" :item="item" @navigate="closePanels()"/></div>
       <h2>Explorer les catégories</h2>
       <RouterLink v-for="item in categoryNavigation" :key="item.label" class="site-mobile-category" :to="item.to" @click="closePanels()"><component :is="icons[item.icon]" :size="18"/><span>{{item.label}}</span><ChevronRight :size="14"/></RouterLink>
-      <div class="site-mobile-account"><RouterLink :to="{name:'favorites'}" @click="closePanels()"><Heart :size="18"/>Mes favoris <span>{{favoritesCount}}</span></RouterLink><button type="button" @click="action('account')"><UserRound :size="18"/>Mon compte <small>Aperçu</small></button><button type="button" @click="action('cart')"><ShoppingBag :size="18"/>Mon panier <span>{{count}}</span></button></div>
-      <p class="site-mobile-note">Boutique de démonstration · Aucun achat réel.</p>
+      <div class="site-mobile-account"><RouterLink :to="{name:'favorites'}" @click="closePanels()"><Heart :size="18"/>Mes favoris <span>{{favoritesCount}}</span></RouterLink><button type="button" @click="action('account')"><UserRound :size="18"/>Mon compte</button><button type="button" @click="action('cart')"><ShoppingBag :size="18"/>Mon panier <span>{{count}}</span></button></div>
+      <p class="site-mobile-note">Explorez les collections et retrouvez vos coups de cœur.</p>
     </nav>
   </header>
 </template>
