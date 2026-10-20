@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted, provide, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ShoppingBag, Heart, UserRound, ArrowRight, X, Truck, ShieldCheck, Check, Plus, Minus, Mail } from 'lucide-vue-next'
+import { ShoppingBag, ArrowRight, X, Truck, ShieldCheck, Check, Plus, Minus, Mail } from 'lucide-vue-next'
 import DevBackendStatus from './components/DevBackendStatus.vue'
 import StoreHeader from './components/layout/StoreHeader.vue'
 import StoreFooter from './components/layout/StoreFooter.vue'
@@ -18,7 +18,7 @@ const route = useRoute()
 const router = useRouter()
 const cart = ref(restoreCart(readStorage('nova-cart', [])))
 const favorites = ref(restoreFavorites(readStorage('nova-favorites', [])))
-const cartOpen = ref(false), toast = ref(''), email = ref(''), subscribed = ref(false), newsletterError = ref(''), checkout = ref(false), account = ref(false)
+const cartOpen = ref(false), toast = ref(''), email = ref(''), subscribed = ref(false), newsletterError = ref('')
 const summary = computed(() => cartSummary(cart.value))
 const count = computed(() => summary.value.count)
 const total = computed(() => summary.value.subtotal)
@@ -73,10 +73,9 @@ function browse(category = 'Tout découvrir', sort = 'featured') {
   return router.push({ name: 'catalog', query: makeCatalogQuery({ category, sort }) })
 }
 function home() { return router.push({ name: 'home' }) }
-function showFavorites() { return router.push({ name: 'favorites' }) }
-function closeOverlays() { cartOpen.value = false; checkout.value = false; account.value = false }
-const overlay = computed(() => cartOpen.value || checkout.value || account.value)
-const activeDialog = computed(() => cartOpen.value ? 'cart' : checkout.value ? 'checkout' : account.value ? 'account' : null)
+function closeOverlays() { cartOpen.value = false }
+const overlay = computed(() => cartOpen.value)
+const activeDialog = computed(() => cartOpen.value ? 'cart' : null)
 watch(activeDialog, async (value, previous) => {
   document.body.style.overflow = value ? 'hidden' : ''
   if (value) {
@@ -126,7 +125,6 @@ onUnmounted(() => { document.removeEventListener('keydown', keyboard); clearTime
 <Transition name="toast"><div v-if="toast" class="toast-message" role="status"><Check :size="18"/>{{ $t(toast) }}</div></Transition>
 <Transition name="overlay"><div v-if="overlay" class="overlay" @click.self="closeOverlays">
 <aside v-if="cartOpen" class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title"><div class="drawer-heading"><div><span class="eyebrow coral">{{ $t("VOS BELLES TROUVAILLES") }}</span><h2 id="cart-title" tabindex="-1">{{ $t("Mon panier ") }}<span>({{ $t(count) }})</span></h2></div><button class="icon-button" :aria-label="$t(&quot;Fermer le panier&quot;)" @click="cartOpen=false"><X/></button></div><template v-if="cart.length"><div class="shipping-note"><Truck :size="18"/><span>{{ $t(total>=10000?'La livraison vous est offerte !':`Plus que ${money(10000-total)} pour la livraison offerte`) }}</span><div><span :style="{width:Math.min(100,total/100)+'%'}"></span></div></div><div class="cart-lines"><article v-for="line in cart" :key="line.id" class="cart-line"><RouterLink class="cart-line-image" @click="closeOverlays" :to="{name:'product',params:{slug:line.slug}}" :aria-label="$t(`Voir ${line.name}`)"><img :src="image(line.image,200)" :alt="$t(line.name)"/></RouterLink><div><small>{{ $t(line.brand) }}</small><h3><RouterLink @click="closeOverlays" :to="{name:'product',params:{slug:line.slug}}">{{ $t(line.name) }}</RouterLink></h3><strong>{{ $t(money(line.price)) }}</strong><div class="quantity"><button :aria-label="$t(`Diminuer ${line.name}`)" @click="change(line.id,-1)"><Minus :size="13"/></button><span>{{ $t(line.quantity) }}</span><button :aria-label="$t(`Augmenter ${line.name}`)" :disabled="line.quantity>=line.stock" @click="change(line.id,1)"><Plus :size="13"/></button></div></div><button class="remove-line" :aria-label="$t(`Retirer ${line.name}`)" @click="removeLine(line.id)"><X :size="15"/></button></article></div><div class="cart-summary"><div><span>{{ $t("Sous-total") }}</span><strong>{{ $t(money(total)) }}</strong></div><div><span>{{ $t("Livraison estimée") }}</span><span>{{ $t(shipping?money(shipping):'Offerte') }}</span></div><div class="summary-total"><span>{{ $t("Total estimé") }}</span><strong>{{ $t(money(total+shipping)) }}</strong></div><RouterLink class="button cart-page-link" :to="{name:'cart'}" @click="closeOverlays">{{ $t("Voir mon panier") }}</RouterLink><button class="button button-dark" @click="beginCheckout">{{ $t("Continuer ") }}<ArrowRight :size="18"/></button><small><ShieldCheck :size="13"/>{{ $t(" Démonstration · Aucun paiement débité") }}</small></div></template><div v-else class="empty-state"><ShoppingBag :size="44"/><h3>{{ $t("Tout commence par une envie.") }}</h3><p>{{ $t("Votre panier attend ses premières trouvailles.") }}</p><button class="button button-dark" @click="cartOpen=false;browse()">{{ $t("Découvrir la sélection ") }}<ArrowRight :size="16"/></button></div></aside>
-<section v-else-if="checkout" class="info-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title"><button class="modal-close icon-button" :aria-label="$t(&quot;Fermer&quot;)" @click="checkout=false"><X/></button><ShieldCheck :size="42" class="coral-icon"/><span class="eyebrow coral">{{ $t("APERÇU DU PARCOURS") }}</span><h2 id="checkout-title">{{ $t("Vos envies sont presque à vous.") }}</h2><p>{{ $t("Le paiement Stripe et la création de commande seront disponibles après connexion au backend Laravel. Aucun paiement n’est collecté dans cette démonstration.") }}</p><div class="checkout-preview"><span>{{ $t(count) }}{{ $t(" article") }}{{ $t(count>1?'s':'') }}{{ $t(" · Total estimé") }}</span><strong>{{ $t(money(total+shipping)) }}</strong></div><button class="button button-dark" @click="checkout=false; if(route.name!=='cart') cartOpen=true">{{ $t("Revenir à mon panier ") }}<ArrowRight :size="16"/></button></section>
-<section v-else-if="account" class="info-modal" role="dialog" aria-modal="true" aria-labelledby="account-title"><button class="modal-close icon-button" :aria-label="$t(&quot;Fermer&quot;)" @click="account=false"><X/></button><UserRound :size="42" class="coral-icon"/><span class="eyebrow coral">{{ $t("VOTRE ESPACE PERSONNEL") }}</span><h2 id="account-title">{{ $t("Un univers rien qu’à vous.") }}</h2><p>{{ $t("Connexion, profil, adresses et suivi des commandes : votre espace client sera disponible avec le backend Laravel.") }}</p><p>{{ $t("Vos favoris et votre panier sont déjà conservés dans ce navigateur.") }}</p><button class="button button-dark" @click="account=false;showFavorites()">{{ $t("Retrouver mes favoris ") }}<Heart :size="16"/></button></section>
+
 </div></Transition>
 </template>

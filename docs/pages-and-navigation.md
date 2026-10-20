@@ -346,3 +346,17 @@ Les composants publics et administratifs utilisent désormais le traducteur Vue 
 Le choix FR/EN agit sur les pages, navigation, textes accessibles, messages, contenus produit, FAQ, informations, titres de document et métadonnée de description. La recherche catalogue accepte aussi les noms anglais, la FAQ recherche dans sa langue affichée. L’administration propose son propre sélecteur. Les dates du journal sont stockées en ISO et formatées selon la langue à l’affichage. La préférence de devise est indépendante et conservée. Les noms de marque, références et saisies personnelles ne sont pas traduits. Les chemins restent identiques dans les deux langues ; les URL localisées et leurs métadonnées SEO avancées relèvent d’un lot ultérieur.
 
 Validation : tests de traduction et couverture des contenus locaux, recherche anglaise et messages dynamiques ; build production ; parcours navigateur des routes publiques et administratives en anglais, bascule FR/EN, formulaires, filtres et conservation panier/devise. Les contenus provenant des futures API nécessiteront des champs traduits : le dictionnaire local ne traduit pas automatiquement du contenu externe.
+
+## Finalisation frontend — lot 3 : catalogue et produits
+
+Les fiches utilisent une galerie séparée avec miniatures, sélection, navigation précédente/suivante, agrandissement et rechargement du visuel. Le modèle accepte jusqu’à huit identifiants de photos autorisés, dédupliqués. Le catalogue actuel ne possède qu’une photo par référence : deux cadrages de cette photo sont explicitement indiqués, sans inventer d’autre angle. Les véritables photos, spécifications et variantes commerciales restent à renseigner avec les données validées.
+
+Les images de fiches et de cartes partagent un composant avec chargement réservé et état d’échec accessible. Les notes et nombres d’avis fictifs ont été retirés de l’affichage ; la fiche annonce l’absence d’avis vérifiés. Le prix barré n’apparaît sur la fiche que s’il dépasse le prix courant. Les cartes et la fiche calculent la quantité encore ajoutable depuis le stock canonique moins les articles déjà au panier ; les boutons sont désactivés à la limite et la fiche explique la quantité déjà sélectionnée. Cette vérification locale sera imposée côté API ultérieurement.
+
+Textes ajoutés traduits FR/EN ; devises conservées. Validation : tests de galerie et quantité restante, build, parcours navigateur avec zoom/miniatures, blocage des images, limites de stock, panier préexistant et responsive. Prochain lot : finition des parcours client (formulaires, panier, compte, checkout et confirmations).
+
+## Finalisation frontend — lots 4, 5 et 6
+
+Les parcours profil/adresses disposent d’une validation par champ, d’un focus cohérent, d’une confirmation de retrait et d’une protection des modifications non enregistrées lors des navigations internes. Les anciennes fenêtres compte/checkout sont retirées du layout. Les données restent fictives et en mémoire.
+
+L’administration sépare désormais logique, formulaire produit et pagination. Ses listes utilisent une pagination partagée ; les ajustements de stock capturent les valeurs confirmées. Les changements de navigation active sont cohérents sur les pages de détail. Une recette Playwright est conservée dans le dépôt et intégrée à la CI pour français, anglais et mobile. Voir `docs/frontend-qa.md` pour l’exécution, la couverture et les limites (notamment absence de certification d’accessibilité et services métier encore non connectés).

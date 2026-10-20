@@ -23,3 +23,19 @@ test('les suggestions traitent les limites invalides sans exposer le catalogue c
   assert.deepEqual(relatedProducts(null), [])
   assert.ok(relatedProducts(products[0], 1).length <= 1)
 })
+
+test('quantité restante calculée sur le stock canonique et les lignes du panier', async () => {
+ const {availableQuantity}=await import('./product.js')
+ assert.equal(availableQuantity({id:1,stock:999},[{id:1,quantity:3}]),5)
+ assert.equal(availableQuantity(products[0],[{id:1,quantity:20}]),0)
+ assert.equal(availableQuantity(products[0],[{id:1,quantity:-1},{id:1,quantity:1.5},{id:2,quantity:3}]),8)
+ assert.equal(availableQuantity(products.find(item=>!item.stock)),0)
+ assert.equal(availableQuantity({id:999}),0)
+})
+test('galerie bornée, photos sûres, sans masquer les cadrages de la même photo', async () => {
+ const {productGallery}=await import('./product.js')
+ const gallery=productGallery(products[0]);assert.equal(gallery.length,2);assert.equal(gallery[0].photo,gallery[1].photo);assert.equal(gallery[1].label,'Détail du visuel')
+ assert.equal(productGallery({}).length,1)
+ assert.equal(productGallery({images:['javascript:alert(1)','photo-test','photo-test','photo-other']}).length,2)
+ assert.ok(productGallery({images:Array.from({length:30},(_,index)=>`photo-${index}`)}).length<=8)
+})

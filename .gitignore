@@ -22,3 +22,7 @@
 **/auth.json
 /backend/.phpunit.cache/
 /backend/.phpunit.result.cache
+
+# Frontend browser test artifacts
+frontend/test-results/
+frontend/playwright-report/
