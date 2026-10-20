@@ -9,7 +9,7 @@ export function initializePreferences() {
 }
 function persist() { try { localStorage.setItem('nova-preferences',JSON.stringify({currency:currency.value,language:language.value})) } catch {} }
 export function setCurrency(value) { if(Object.hasOwn(exchangeRates,value)){currency.value=value;persist()} }
-export function setLanguage(value) { if(['fr','en'].includes(value)){language.value=value;document.documentElement.lang=value;persist()} }
+export function setLanguage(value) { if(['fr','en'].includes(value)){language.value=value;if(typeof document!=='undefined')document.documentElement.lang=value;persist()} }
 export function formatMoney(cents, code=currency.value, locale=language.value) {
   const selected=Object.hasOwn(exchangeRates,code)?code:'EUR'
   const digits=selected==='XOF'?0:2

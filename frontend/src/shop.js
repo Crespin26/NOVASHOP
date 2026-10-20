@@ -1,3 +1,4 @@
+import { translate } from './i18n.js'
 export { formatMoney as money } from './preferences.js'
 export const image = (id, width = 700) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=85`
 export const categories = [
@@ -38,7 +39,7 @@ export function isNewProduct(product, referenceDate = CATALOG_DATE) {
 }
 
 export function filteredProducts({query='',category='Tout découvrir',favorites=null,sort='featured',collection='all',minPrice=null,maxPrice=null,availability='all'}={}) {
- const result=products.filter(p=>(category==='Tout découvrir'||p.category===category)&&(`${p.name} ${p.brand}`.toLocaleLowerCase('fr').includes(query.toLocaleLowerCase('fr')))&&(!favorites||favorites.includes(p.id))&&(minPrice===null||p.price>=minPrice)&&(maxPrice===null||p.price<=maxPrice)&&(availability!=='in-stock'||p.stock>0)&&(availability!=='out-of-stock'||p.stock===0)&&(collection!=='promotions'||discountPercent(p)>0)&&(collection!=='new-arrivals'||isNewProduct(p)))
+ const result=products.filter(p=>(category==='Tout découvrir'||p.category===category)&&(`${p.name} ${p.brand} ${translate(p.name,'en')} ${translate(p.brand,'en')}`.toLocaleLowerCase('fr').includes(query.toLocaleLowerCase('fr')))&&(!favorites||favorites.includes(p.id))&&(minPrice===null||p.price>=minPrice)&&(maxPrice===null||p.price<=maxPrice)&&(availability!=='in-stock'||p.stock>0)&&(availability!=='out-of-stock'||p.stock===0)&&(collection!=='promotions'||discountPercent(p)>0)&&(collection!=='new-arrivals'||isNewProduct(p)))
  if(sort==='price-up') result.sort((a,b)=>a.price-b.price)
  else if(sort==='price-down') result.sort((a,b)=>b.price-a.price)
  else if(sort==='newest'||collection==='new-arrivals') result.sort((a,b)=>Date.parse(b.publishedAt)-Date.parse(a.publishedAt))

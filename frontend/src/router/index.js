@@ -1,6 +1,8 @@
 import { adminLinks, adminDetails } from '../admin.js'
 import { informationPages } from '../information.js'
-import { nextTick } from 'vue'
+import { translate } from '../i18n.js'
+import { language } from '../preferences.js'
+import { nextTick, watch } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { canonicalQuery, findProductBySlug, findCategoryBySlug, sameQuery } from './policy.js'
 
@@ -47,6 +49,13 @@ export function createStoreRouter(history = createWebHistory()) {
       return to.path === from.path ? false : { top: 0 }
     },
   })
+  watch(language, () => {
+    if(typeof document==='undefined')return
+    const to=router.currentRoute.value
+    const title=to.name==='product'?(findProductBySlug(to.params.slug)?.name ?? 'Produit introuvable'):to.name==='category'?(findCategoryBySlug(to.params.slug)?.name ?? 'Catégorie introuvable'):to.meta.title
+    document.title=`${translate(title || 'NovaShop')} — NovaShop`
+    document.querySelector('meta[name="description"]')?.setAttribute('content',language.value==='en'?'Discover NovaShop: fashion, technology, home and wellbeing. Explore the collections and find your favourites.':'Découvrez NovaShop : mode, technologie, maison et bien-être. Explorez les collections et retrouvez vos coups de cœur.')
+  }, {immediate:true})
   router.beforeEach(to => {
     const query = canonicalQuery(to.name, to.query)
     const hash = to.hash === '#main' ? '#main' : ''
@@ -57,7 +66,7 @@ export function createStoreRouter(history = createWebHistory()) {
     const product = to.name === 'product' ? findProductBySlug(to.params.slug) : null
     const category = to.name === 'category' ? findCategoryBySlug(to.params.slug) : null
     const title = to.name === 'product' ? product?.name ?? 'Produit introuvable' : to.name === 'category' ? category?.name ?? 'Catégorie introuvable' : to.meta.title
-    document.title = `${title} — NovaShop`
+    document.title = `${translate(title)} — NovaShop`
     if (to.path === from.path && to.query.page !== from.query.page) {
       await nextTick()
       document.getElementById('catalog-results')?.focus({ preventScroll: true })

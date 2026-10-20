@@ -122,3 +122,5 @@ Le parcours `/commande` propose trois étapes de démonstration, puis une confir
 Les pages aide/FAQ, contact, livraison, retours et informations légales sont accessibles depuis le footer. La FAQ est filtrable ; le formulaire de contact simule un envoi sans transmission ni stockage. Les informations légales et commerciales restent provisoires jusqu’à validation des données réelles de l’exploitant.
 
 L’aperçu public `/admin` propose 16 écrans de gestion dans un layout distinct. Les données administratives fictives restent en mémoire et sont isolées de la boutique. Aucune action ne modifie des données réelles ; les autorisations serveur seront ajoutées avec les API métier.
+
+Le sélecteur FR/EN traduit désormais les pages publiques et l’administration, leurs messages et les libellés accessibles, sans modifier les URL ni les identifiants métier. Les traductions anglaises sont dans `frontend/src/locales/en.json`, avec repli sur le français ; les contenus futurs des API devront fournir leurs traductions. Langue et devise sont indépendantes. Les recherches de produits acceptent les noms français et anglais.

@@ -18,8 +18,8 @@ onUnmounted(() => { active = false })
 <template>
   <div class="dev-status" :class="status" role="status">
     <span></span>
-    <span>{{ status === 'ready' ? 'API + PostgreSQL connectés' : status === 'loading' ? 'Connexion au backend…' : 'Backend indisponible' }}</span>
-    <button v-if="status === 'offline'" @click="check">Réessayer</button>
+    <span>{{ $t(status === 'ready' ? 'API + PostgreSQL connectés' : status === 'loading' ? 'Connexion au backend…' : 'Backend indisponible') }}</span>
+    <button v-if="status === 'offline'" @click="check">{{ $t("Réessayer") }}</button>
   </div>
 </template>
 <style scoped>
