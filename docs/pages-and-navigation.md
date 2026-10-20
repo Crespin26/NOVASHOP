@@ -9,7 +9,7 @@ Ce document est la référence de travail pour les pages, les URL et les destina
 - Hypothèse de départ : produits physiques, compte requis pour commander, une devise principale. Le code de démonstration utilise EUR ; devise commerciale, variantes, pays, taxes, livraison et politique de retour restent à définir avant les modules concernés.
 - Le catalogue, les prix, les avis, les stocks et les montants affichés sont fictifs. Une fonctionnalité frontend n’est considérée comme complète commercialement qu’après connexion et validation serveur.
 
-État observé dans `frontend/src/router/index.js` : sept routes nommées sont déclarées (`home`, `catalog`, `promotions`, `new-arrivals`, `favorites`, `product`, `not-found`). Le panier est un tiroir partagé ; compte et checkout sont des fenêtres explicatives. Les autres destinations de ce document restent à créer. Les pages publiques existantes restent à enrichir selon leurs critères ci-dessous.
+État observé dans `frontend/src/router/index.js` : huit routes nommées sont déclarées (`home`, `catalog`, `category`, `promotions`, `new-arrivals`, `favorites`, `product`, `not-found`). Le panier est un tiroir partagé ; compte et checkout sont des fenêtres explicatives. Les autres destinations de ce document restent à créer. Les pages publiques existantes restent à enrichir selon leurs critères ci-dessous.
 
 ### Lecture des statuts et accès
 
@@ -30,7 +30,7 @@ Les noms de routes ci-dessous sont des cibles stables pour les futurs liens nomm
 | --- | --- | --- | --- | --- | --- |
 | PUB-01 | Accueil | `/` | `home` | Prototype | Sélections, univers, offres et nouveautés → catégorie, produit ou liste correspondante |
 | PUB-02 | Boutique / recherche | `/boutique` | `catalog` | Prototype | Recherche, filtres, tri, pagination → produit |
-| PUB-03 | Catégorie | `/categories/:slug` | `category` | À créer | Introduction, sous-sélections et catalogue filtré → produit |
+| PUB-03 | Catégorie | `/categories/:slug` | `category` | Prototype | Introduction, sous-sélections et catalogue filtré → produit |
 | PUB-04 | Promotions | `/promotions` | `promotions` | Prototype | Réductions actives, prix de référence et filtres → produit |
 | PUB-05 | Nouveautés | `/nouveautes` | `new-arrivals` | Prototype | Produits classés selon leur date de publication → produit |
 | PUB-06 | Produit | `/produits/:slug` | `product` | Prototype | Images, prix, description, disponibilité, options éventuelles → panier ou favoris |
@@ -227,14 +227,14 @@ Un visiteur cliquant sur les commandes sera dirigé vers la connexion avec une i
 | Paramètre | Périmètre | Règle cible | État |
 | --- | --- | --- | --- |
 | `q` | Boutique et favoris | Texte scalaire, caractères de contrôle retirés, 120 caractères maximum, affiché comme texte | Présent |
-| `category` | Boutique et favoris | Slug connu ; la page catégorie utilise le slug du chemin comme référence | Présent sur les deux listes existantes |
+| `category` | Boutique et favoris | Slug connu ; la page catégorie utilise le slug du chemin comme référence | Présent sur les listes ; catégorie du chemin prioritaire sur une page dédiée |
 | `sort` | Listes compatibles | Liste autorisée ; ne pas utiliser une valeur brute comme expression SQL | `featured`, `price-up`, `price-down` présents |
-| `page` | Listes paginées | Entier positif, borné par les résultats ; retour à la page 1 après changement de filtre | À ajouter avec la pagination |
-| Prix / disponibilité | Listes catalogue | Montants dans l’unité définie par le contrat, bornes cohérentes, disponibilité autorisée | À définir avec les filtres avancés |
-| `:slug` | Produit / catégorie | Format accepté et existence vérifiée ; absent → introuvable | Produit présent, catégorie à créer |
+| `page` | Listes paginées | Entier positif, borné par les résultats ; retour à la page 1 après changement de filtre | Présent : 8 produits par page, retour à 1 après filtre et correction des pages excessives |
+| Prix / disponibilité | Listes catalogue | Montants dans l’unité définie par le contrat, bornes cohérentes, disponibilité autorisée | Présent : `min`/`max` en centimes bornés, `stock` parmi deux valeurs autorisées |
+| `:slug` | Produit / catégorie | Format accepté et existence vérifiée ; absent → introuvable | Produit et catégorie présents |
 | `:id`, `:reference` | Compte / administration | Identifiant validé, puis autorisation serveur ; connaître l’URL n’accorde aucun droit | À implémenter |
 
-La normalisation actuelle ne conserve que `q`, `category` et `sort` sur boutique/favoris, plus l’ancre `#main`. Avant l’ajout d’une nouvelle route, déclarer et tester ses paramètres autorisés dans `router/policy.js`. Pour une catégorie dédiée, ses filtres devront être explicitement ajoutés à cette politique.
+La normalisation actuelle conserve `q`, `category`, `sort`, `min`, `max`, `stock` et `page` sur les listes, plus l’ancre `#main`. Sur une page catégorie, `category` est retiré au profit du slug du chemin. Avant l’ajout d’une nouvelle route, déclarer et tester ses paramètres autorisés dans `router/policy.js`. Les filtres des catégories dédiées sont intégrés à cette politique depuis le point 4.
 
 Les liens temporaires d’authentification et le retour Stripe nécessiteront leur propre contrat avant activation : paramètres minimaux, validation serveur, pas d’analytics tiers sur les écrans sensibles et retrait des valeurs devenues inutiles. Ne pas appliquer aveuglément la politique publique actuelle à ces futurs liens, au risque de supprimer un token attendu. Ne pas placer de mot de passe, adresse, numéro de carte ou secret de session dans une URL ; la normalisation client n’efface pas les journaux déjà produits.
 
@@ -293,10 +293,12 @@ Pour chaque ID de l’inventaire :
 
 Le point 2 est une première passe de navigation globale. Les liens qui dépendent des points suivants seront activés avec leurs pages, puis une revue intégrale en point 13 vérifiera l’absence de destination provisoire. Définir les contrats de données de chaque écran avant de finaliser ses formulaires frontend évitera des divergences avec les API.
 
-Les points 1, 2 et 3 sont réalisés pour le périmètre disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
+Les points 1 à 4 sont réalisés pour le périmètre frontend disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
 
-Les catégories restent reliées au catalogue filtré jusqu’au point 4. Les pages panier, compte, assistance et informations légales ne sont pas encore implémentées. Leur activation reste suivie avec les lots concernés ; cela ne bloque pas la première passe du point 2.
+Les catégories sont maintenant reliées à leurs pages dédiées, y compris depuis l’accueil, l’en-tête, le footer et les fiches produit. Les pages panier, compte, assistance et informations légales ne sont pas encore implémentées. Leur activation reste suivie avec les lots concernés ; cela ne bloque pas la première passe du point 2.
 
 Le point 3 relie l’accueil à des sélections cohérentes, aux produits des bannières et aux listes promotions/nouveautés désormais disponibles. Les prix et réductions proviennent du même catalogue de démonstration ; les nouveautés reposent sur ses dates de publication fictives.
 
-Prochain travail : point 4, boutique et catégories, avec filtres avancés, pagination et pages catégorie dédiées.
+Le point 4 ajoute prix, disponibilité et pagination aux listes, ainsi que les pages catégorie dédiées et leurs états introuvables. Tous ces éléments reposent encore sur des données locales fictives.
+
+Prochain travail : point 5, enrichissement des fiches produits et des favoris.

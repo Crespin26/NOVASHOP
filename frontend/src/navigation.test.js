@@ -31,7 +31,7 @@ test('promotions and nouveautés have their own declared collection destinations
 test('current navigation reflects both catalog section and exact category', () => {
   const filtered = { name: 'catalog', query: { category: 'high-tech' } }
   assert.equal(isNavigationCurrent(filtered, mainNavigation[1]), true)
-  assert.equal(isNavigationCurrent(filtered, categoryNavigation[1]), true)
-  assert.equal(isNavigationCurrent(filtered, categoryNavigation[2]), false)
+  assert.equal(isNavigationCurrent({ name: 'category', params: { slug: 'high-tech' }, query: {} }, categoryNavigation[1]), true)
+  assert.equal(isNavigationCurrent({ name: 'category', params: { slug: 'high-tech' }, query: {} }, categoryNavigation[2]), false)
   assert.equal(isNavigationCurrent({ name: 'product', query: {} }, mainNavigation[1]), false)
 })

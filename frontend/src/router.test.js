@@ -13,7 +13,7 @@ test('public routes and catch-all resolve without a client-side private area', (
 })
 
 test('catalog URLs round-trip their supported filters', () => {
-  const state = { query: 'Studio', category: 'High-tech', sort: 'price-up' }
+  const state = { query: 'Studio', category: 'High-tech', sort: 'price-up', minPrice: null, maxPrice: null, availability: 'all', page: 1 }
   assert.deepEqual(readCatalogQuery(makeCatalogQuery(state)), state)
 })
 

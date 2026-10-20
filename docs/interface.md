@@ -28,7 +28,7 @@ Le client `frontend/src/api.js` centralise les requêtes JSON, les erreurs, les 
 
 ## Évolution
 
-Remplacer les données de `frontend/src/shop.js` par les réponses de l’API Laravel, puis connecter authentification, commandes et Stripe. Revalider les prix et stocks côté serveur. Vue Router 4 fournit les pages publiques, avec chargement différé des vues. La recherche (`q`, 120 caractères maximum), la catégorie (`category`, slug autorisé) et le tri (`sort`) sont partagés via l’URL de la boutique, des favoris, des promotions ou des nouveautés. Le retour/suivant rétablit ces filtres. Les autres paramètres sont supprimés par le routeur. Les liens internes utilisent des destinations connues, sans paramètre de redirection externe.
+Remplacer les données de `frontend/src/shop.js` par les réponses de l’API Laravel, puis connecter authentification, commandes et Stripe. Revalider les prix et stocks côté serveur. Vue Router 4 fournit les pages publiques, avec chargement différé des vues. La recherche (`q`, 120 caractères maximum), la catégorie (`category` ou slug de chemin), le tri (`sort`), les prix (`min`, `max`), la disponibilité (`stock`) et la pagination (`page`) sont partagés via l’URL des listes. Le retour/suivant rétablit ces filtres. Les autres paramètres sont supprimés par le routeur. Les liens internes utilisent des destinations connues, sans paramètre de redirection externe.
 
 Les images Unsplash et les polices Google sont chargées à distance. Avant publication commerciale, choisir et vérifier les droits des ressources finales, puis héberger les actifs validés localement.
 
@@ -38,6 +38,7 @@ Les images Unsplash et les polices Google sont chargées à distance. Avant publ
 | --- | --- |
 | `/` | Accueil |
 | `/boutique` | Catalogue de démonstration |
+| `/categories/:slug` | Univers connu, description et catalogue filtré ; catégorie absente → introuvable |
 | `/promotions` | Produits à prix réduit dans la démonstration |
 | `/nouveautes` | Publications récentes du catalogue de démonstration |
 | `/favoris` | Favoris locaux |
@@ -54,7 +55,7 @@ Référence : [Vue Router — mode historique](https://router.vuejs.org/guide/es
 
 Les composants `StoreHeader.vue` et `StoreFooter.vue`, dans `frontend/src/components/layout/`, partagent les destinations de `frontend/src/navigation.js`. `NavigationItem.vue` distingue liens, actions et rubriques en préparation.
 
-- Accueil, boutique, favoris et catégories du catalogue utilisent des liens internes connus. Les catégories mènent provisoirement au catalogue filtré ; les pages catégorie dédiées seront reliées lorsqu’elles existeront.
+- Accueil, boutique, favoris et catégories du catalogue utilisent des liens internes connus. Depuis le point 4, les catégories mènent à leurs pages dédiées et conservent leurs propres filtres.
 - Au point 3, promotions et nouveautés ont reçu leurs listes dédiées ; les liens sont désormais actifs dans l’en-tête et le footer. Les informations, pages légales et commandes absentes sont également indiquées sans faux lien.
 - Le compte est un aperçu explicitement indiqué. Le panier reste un tiroir accessible depuis l’en-tête, le menu mobile et le footer ; ses produits renvoient à leur fiche. La page panier sera ajoutée au point 6.
 - Les catégories sur ordinateur forment un panneau de navigation. Le menu mobile propose navigation principale, catégories, favoris, compte et panier. Ces panneaux sont des disclosures non modaux : navigation Tab habituelle, Échap avec retour au déclencheur, fermeture extérieure, fermeture après navigation et au changement de mode d’écran.
@@ -72,8 +73,39 @@ Les offres sélectionnent les produits dont le prix est inférieur au prix de r�
 
 Les nouveautés utilisent `publishedAt` et une fenêtre de 30 jours, dans l’ordre des publications. L’instantané local `CATALOG_DATE` est fixé au **19 octobre 2026** ; ce n’est pas une actualisation commerciale en temps réel. Le serveur fournira ensuite les produits publiés et la référence temporelle adaptée. Les avis restent illustratifs et sont indiqués « avis démo » sur les cartes. Les portraits et étoiles suggérant des clients réels ont été retirés de la bannière.
 
-Les routes `/promotions` et `/nouveautes` réutilisent la liste du catalogue : filtres de catégorie, recherche via l’URL, tri et états sans résultat. Elles sont fournies dès ce point pour que les liens d’accueil soient fonctionnels ; les filtres avancés, la pagination et les pages catégorie restent au point 4. Les paramètres acceptés restent bornés et les paramètres sensibles ou inconnus sont retirés par le routeur.
+Les routes `/promotions` et `/nouveautes` réutilisent la liste du catalogue : filtres de catégorie, recherche via l’URL, tri et états sans résultat. Elles sont fournies dès ce point pour que les liens d’accueil soient fonctionnels ; les filtres avancés, la pagination et les pages catégorie ont ensuite été complétés au point 4. Les paramètres acceptés restent bornés et les paramètres sensibles ou inconnus sont retirés par le routeur.
 
 La bannière audio mène au high-tech et son lien porte ce libellé, sans promettre un filtre audio absent. Les services encore non connectés sont explicitement annoncés comme prévus ou simulés. Les liens de navigation sont de vrais liens internes ; favoris, ajout au panier et changements de bannière restent des boutons.
 
 Vérifications : tests des dates, réductions, sélections et destinations ; compilation ; parcours navigateur avec liens directs, rechargement, historique, carrousel, filtres de collections, favoris, panier et largeurs de 320 à 1440 px. Aucune transaction réelle n’est effectuée.
+
+## Boutique et catégories — point 4
+
+La vue `CatalogView.vue` est partagée entre boutique, catégorie, promotions, nouveautés et favoris. `catalog.js` centralise la conversion exacte des prix saisis en centimes et la pagination locale. Les catégories possèdent slug, description et image dans les données de démonstration.
+
+Les liens de catégories dans l’en-tête, le footer, les bannières, les univers de l’accueil et le fil d’Ariane produit utilisent `/categories/:slug`. Le slug du chemin fait autorité sur la catégorie ; un paramètre `category` contradictoire est retiré sur cette route. Les anciens liens `/boutique?category=…` restent lisibles.
+
+### Contrat de navigation des listes
+
+| Paramètre | Valeurs et règle |
+| --- | --- |
+| `q` | Texte scalaire, 120 caractères maximum, caractères de contrôle retirés |
+| `category` | Slug connu sur boutique/favoris/promotions/nouveautés ; absent des pages catégorie dédiées |
+| `sort` | `featured`, `price-up`, `price-down`, `newest` ; ordre des dates par défaut pour les nouveautés |
+| `min`, `max` | Centimes entiers de 0 à 100 000 000 (1 000 000 €), bornes inclusives ; minimum zéro omis |
+| `stock` | `in-stock` ou `out-of-stock` ; absence = toutes les disponibilités |
+| `page` | Entier de 1 à 10 000, puis limité au nombre réel de pages ; page 1 omise |
+
+Le formulaire accepte des euros avec point ou virgule, au maximum deux décimales, sans conversion flottante. Une saisie invalide ou un minimum supérieur au maximum affiche une erreur et conserve l’URL. Pour un lien externe avec bornes inversées, le routeur les remet dans l’ordre. Les nombres négatifs, notations exponentielles, valeurs répétées, types inattendus et paramètres inconnus ne sont pas acceptés comme filtres.
+
+- Recherche, catégorie, prix, stock et tri se combinent ; un changement remet la pagination à 1.
+- Les prix et le stock sont appliqués via un formulaire ; la recherche possède une soumission distincte. Changer de catégorie conserve les filtres appliqués, pas les saisies non soumises.
+- Les filtres actifs peuvent être retirés individuellement. La réinitialisation conserve l’univers d’une page catégorie, ou le type de liste pour promotions/nouveautés/favoris.
+- Les listes affichent 8 produits par page. Une page devenue excessive après filtrage ou retrait d’un favori est corrigée sans ajouter une étape d’historique.
+- Les liens paginés et filtres sont rechargeables ; retour/suivant restaure leur état. Le résumé annonce la tranche affichée et le nombre total.
+- Le panneau de filtres utilise un élément `details`, ouvert par défaut sur ordinateur, replié sur mobile. Après application mobile, le focus va au titre des résultats. Les fenêtres panier/compte restent gérées par le layout commun.
+- L’absence de résultats propose une réinitialisation ; une catégorie inconnue affiche une page introuvable. Les favoris totalement vides proposent la boutique.
+
+L’appareil photo Explorer et le rituel de soin naturel sont volontairement en rupture dans les données fictives. Leur ajout au panier est désactivé sur carte et fiche ; la fiche reste consultable. Ce stock local n’est ni une réservation ni une garantie commerciale. Le backend devra toujours recalculer les prix et contrôler les disponibilités avant achat.
+
+Vérifications : tests de normalisation, centimes, combinaisons et pagination ; compilation ; navigateur avec saisies invalides, URL excessives, catégorie inconnue, liens directs, historique, retrait de favoris, rupture, affichage de HTML comme texte et largeurs de 320 à 1440 px.

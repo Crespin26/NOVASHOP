@@ -3,7 +3,7 @@ import { ref, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Search, ShoppingBag, Heart, UserRound, ArrowRight, ArrowUpRight, ChevronDown, ChevronRight, Menu, X, Truck, Grid2X2, Headphones, Shirt, House, Sparkles, Bike } from 'lucide-vue-next'
 import { categoryNavigation, mainNavigation } from '../../navigation.js'
-import { readCatalogQuery, makeCatalogQuery } from '../../router/policy.js'
+import { readCatalogQuery, makeCatalogQuery, findCategoryBySlug, categoryDestination } from '../../router/policy.js'
 import NavigationItem from './NavigationItem.vue'
 const props = defineProps({ count: { type: Number, default: 0 }, favoritesCount: { type: Number, default: 0 }, overlayOpen: Boolean })
 const emit = defineEmits(['cart', 'account'])
@@ -28,8 +28,8 @@ function toggleCategories() { mobileOpen.value = false; categoriesOpen.value = !
 function clearSearch() { query.value = ''; nextTick(() => searchInput.value?.focus()) }
 function search() {
   closePanels()
-  const filters = route.name === 'catalog' ? readCatalogQuery(route.query) : {}
-  router.push({ name: 'catalog', query: makeCatalogQuery({ ...filters, query: query.value }) })
+  const filters = ['catalog','category'].includes(route.name) ? { ...readCatalogQuery(route.query), category: route.name === 'category' ? findCategoryBySlug(route.params.slug)?.name : readCatalogQuery(route.query).category } : {}
+  router.push({ name: 'catalog', query: makeCatalogQuery({ ...filters, query: query.value, page: 1 }) })
 }
 function action(name) { closePanels(); emit(name) }
 function outside(event) { if (!root.value?.contains(event.target)) closePanels() }
@@ -40,7 +40,7 @@ function keyboard(event) {
   }
 }
 watch(() => route.fullPath, () => {
-  query.value = ['catalog', 'favorites', 'promotions', 'new-arrivals'].includes(route.name) ? readCatalogQuery(route.query).query : ''
+  query.value = ['catalog', 'category', 'favorites', 'promotions', 'new-arrivals'].includes(route.name) ? readCatalogQuery(route.query).query : ''
   closePanels()
 }, { immediate: true })
 watch(() => props.overlayOpen, value => { if (value) closePanels() })
@@ -85,7 +85,7 @@ onUnmounted(() => {
         </nav>
       </div>
       <div class="site-primary-links"><NavigationItem v-for="item in mainNavigation" :key="item.label" :item="item" @navigate="closePanels()"/></div>
-      <RouterLink class="site-inspiration" :to="{ name:'catalog',query:makeCatalogQuery({category:'Maison & déco'}) }" @click="closePanels()">L’inspiration maison <ArrowUpRight :size="15"/></RouterLink>
+      <RouterLink class="site-inspiration" :to="categoryDestination('Maison & déco')" @click="closePanels()">L’inspiration maison <ArrowUpRight :size="15"/></RouterLink>
     </nav></div>
     <nav v-if="mobileOpen" id="site-mobile-navigation" ref="mobilePanel" class="site-mobile-panel" aria-label="Navigation mobile">
       <div class="site-mobile-panel-heading"><span>Votre univers NovaShop</span><button type="button" aria-label="Fermer le menu mobile" @click="closePanels(true)"><X :size="20"/></button></div>

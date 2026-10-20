@@ -22,7 +22,7 @@ Plateforme e-commerce Full Stack conçue pour permettre aux entreprises de comme
 ## Stack et intégrations
 
 - **Backend :** Laravel 13, PHP 8.5, API JSON versionnée et Sanctum préparé pour les sessions.
-- **Frontend :** Vue 3, Vite et Vue Router 4 ; gestion des pages publiques et filtres dans l’URL. Pinia sera évalué avec les modules concernés.
+- **Frontend :** Vue 3, Vite et Vue Router 4 ; pages catégorie, filtres combinés et pagination dans l’URL. Pinia sera évalué avec les modules concernés.
 - **Données :** PostgreSQL 17 ; files de tâches en base et cache fichier pour le développement.
 - **Paiement :** Stripe Checkout et webhooks.
 - **Qualité :** PHPUnit sur PostgreSQL, tests Node et CI GitHub Actions configurée ; parcours métier de bout en bout à venir.
@@ -81,7 +81,7 @@ Le panier et les favoris restent dans le stockage local du navigateur. Le formul
 
 L’en-tête et le footer partagent leur navigation, avec menus ordinateur/mobile, recherche, favoris et accès au tiroir panier. Les destinations encore absentes sont indiquées « Bientôt » ; le compte reste un aperçu.
 
-Les pages publiques disposent d’URL directes : `/`, `/boutique`, `/promotions`, `/nouveautes`, `/favoris` et `/produits/casque-sans-fil-studio`. Exemple de filtres partageables : `/boutique?category=high-tech&sort=price-up`. Les produits inconnus et chemins inexistants affichent une page introuvable.
+Les pages publiques disposent d’URL directes : `/`, `/boutique`, `/categories/high-tech`, `/promotions`, `/nouveautes`, `/favoris` et `/produits/casque-sans-fil-studio`. Exemples de liens partageables : `/categories/high-tech?min=5000&max=10000&stock=in-stock` (prix en centimes) et `/boutique?page=2`. Les listes affichent 8 produits par page. Les formulaires de prix acceptent les euros avec virgule ou point. Deux produits fictifs sont en rupture pour vérifier ce parcours. Les produits inconnus et chemins inexistants affichent une page introuvable.
 
 Le routage ne remplace pas les autorisations Laravel. Compte et checkout restent des aperçus sans authentification ni paiement ; aucune zone administrateur n’est ouverte par le routeur. Voir les [mesures de sécurité et limites du routage](docs/security-and-quality.md#routage-public-et-stockage-local).
 

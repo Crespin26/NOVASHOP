@@ -20,7 +20,7 @@ Ce document définit les exigences de la plateforme complète ; il ne constitue 
 Mesures présentes dans cette étape :
 
 - Routes publiques explicitement déclarées et vues chargées depuis une liste statique ; aucune URL utilisateur ne détermine un import de code.
-- Paramètres limités à `q`, `category` et `sort` pour boutique/favoris/promotions/nouveautés : valeurs scalaires, longueur de recherche bornée et listes autorisées pour les autres filtres. Les paramètres inconnus, dont `redirect`, `token` et `role`, ne sont pas consommés et sont retirés de l’URL par le routeur.
+- Paramètres limités à `q`, `category`, `sort`, `min`, `max`, `stock` et `page` pour boutique/favoris/promotions/nouveautés : valeurs scalaires, longueur de recherche bornée, montants entiers bornés, pagination limitée aux résultats et listes autorisées pour les autres filtres. Le slug d’une page catégorie ne peut pas être contredit par la query. Les paramètres inconnus, dont `redirect`, `token` et `role`, ne sont pas consommés et sont retirés de l’URL par le routeur.
 - Produit résolu uniquement depuis un slug connu. Les chemins inconnus, y compris les futures zones privées, affichent la page introuvable.
 - Texte issu des URL affiché avec l’interpolation Vue, sans `v-html` ni compilation de contenu utilisateur. Le navigateur vérifié n’exécute pas le HTML injecté dans une recherche. Voir les [recommandations de sécurité Vue](https://vuejs.org/guide/best-practices/security).
 - Politique de référent `strict-origin-when-cross-origin` dans le document HTML.

@@ -1,10 +1,10 @@
 import { categories } from './shop.js'
-import { makeCatalogQuery } from './router/policy.js'
+import { categoryDestination } from './router/policy.js'
 
 export const categoryNavigation = categories.map(category => ({
   label: category.name,
   icon: category.icon,
-  to: { name: 'catalog', query: makeCatalogQuery({ category: category.name }) },
+  to: categoryDestination(category.name),
 }))
 
 export const mainNavigation = [
@@ -43,8 +43,10 @@ export const footerNavigation = [
 ]
 
 export function isNavigationCurrent(route, item) {
-  if (!item.to || route.name !== item.to.name) return false
-  if (item.section) return true
+  if (!item.to) return false
+  if (item.section && item.to.name === 'catalog') return ['catalog', 'category'].includes(route.name)
+  if (route.name !== item.to.name) return false
+  if (item.to.name === 'category') return route.params?.slug === item.to.params.slug
   if (item.to.name === 'catalog') return (route.query.category || '') === (item.to.query?.category || '')
   return true
 }

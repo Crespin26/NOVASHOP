@@ -1,7 +1,7 @@
 import { products, discountPercent, filteredProducts } from './shop.js'
-import { makeCatalogQuery } from './router/policy.js'
+import { makeCatalogQuery, categoryDestination } from './router/policy.js'
 
-export const categoryDestination = category => ({ name: 'catalog', query: makeCatalogQuery({ category }) })
+export { categoryDestination }
 export const productDestination = product => ({ name: 'product', params: { slug: product.slug } })
 export const homeSlides = [
   { productId: 1, eyebrow: 'LA SÉLECTION QUI CHANGE TOUT', title: 'Un peu de vous.\nBeaucoup de style.', text: 'Des objets bien pensés, des essentiels à découvrir.\nExplorez ce qui rend votre quotidien extraordinaire.', label: 'Le son, en toute liberté.' },
