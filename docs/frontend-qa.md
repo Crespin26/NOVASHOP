@@ -41,3 +41,7 @@ Les anciennes fenêtres compte et paiement d’`App.vue` ont été retirées. Le
 ## Limites à garder explicites
 
 Cette recette ne certifie pas la conformité WCAG : les contrastes, lecteurs d’écran et appareils physiques restent à revoir dans la validation finale. Les services non connectés ne sont pas présentés comme opérationnels. Les caractéristiques, photos multiples et variantes commerciales restent à fournir. Les erreurs réseau métier, authentification, concurrence sur les stocks, paiements et autorisations réels seront testés après développement et connexion des API. Aucune mise en production n’est effectuée par ces commandes.
+
+## Apparence claire et sombre
+
+Le sélecteur soleil/lune précède la langue dans le bandeau et se retrouve dans l’administration. Le thème est enregistré dans `nova-preferences`, indépendamment de la langue et de la devise. Sans préférence valide, le mode clair est utilisé. Un script de démarrage applique le choix avant le montage Vue. Les photos ne sont pas inversées ; les surfaces, champs, menus, fenêtres et états de focus disposent de couleurs dédiées dans `src/theme.css`. La recette comprend persistance, indépendance des préférences et affichage ordinateur/mobile, avec captures des pages sombres. Cela ne remplace pas une revue de contraste exhaustive de chaque état.

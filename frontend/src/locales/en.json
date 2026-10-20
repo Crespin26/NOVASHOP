@@ -757,5 +757,10 @@
   "Quitter sans enregistrer les modifications ?": "Leave without saving changes?",
   "Supprimer cette adresse ?": "Remove this address?",
   "Adresse retirée de l’aperçu.": "Address removed from the preview.",
-  "Pagination des résultats": "Results pagination"
+  "Pagination des résultats": "Results pagination",
+  "Mode d’affichage": "Appearance",
+  "Mode clair": "Light mode",
+  "Mode sombre": "Dark mode",
+  "Le panier conserve uniquement les identifiants des produits et leurs quantités dans nova-cart. Les favoris conservent des identifiants dans nova-favorites. La langue, la devise et le mode clair ou sombre sont conservés dans nova-preferences. Vous pouvez les supprimer depuis les pages panier et favoris ou depuis les paramètres de votre navigateur.": "The cart stores only product IDs and quantities in nova-cart. Favourites store IDs in nova-favorites. Your language, currency and light or dark appearance are saved in nova-preferences. You can clear selections on the cart and favourites pages or through your browser settings.",
+  "Le prototype utilise le stockage local du navigateur pour nova-cart, nova-favorites et nova-preferences (langue, devise et affichage). Aucun cookie de suivi publicitaire ni outil de mesure d’audience n’est intégré par le frontend actuel.": "The prototype uses browser local storage for nova-cart, nova-favorites and nova-preferences (language, currency and appearance). The current frontend includes no advertising tracking cookies or analytics tools."
 }

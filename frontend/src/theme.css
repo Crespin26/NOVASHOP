@@ -1,0 +1,40 @@
+:root{--surface:#fff;--surface-soft:#f4f6f3;--surface-raised:#fff;--text-main:#172d40;--text-secondary:#626f74;--theme-border:#dce3df;color-scheme:light}
+.theme-switcher{display:inline-flex;align-items:center;gap:2px;border:1px solid currentColor;border-radius:20px;padding:2px;flex-shrink:0;color:inherit}.theme-switcher button{width:28px;height:26px;display:grid;place-items:center;border-radius:50%;padding:0;color:inherit;transition:background .15s,color .15s}.theme-switcher button[aria-pressed=true]{background:#eaf0ec;color:#142e43}.theme-switcher button:focus-visible{outline:2px solid #f39c8d;outline-offset:3px}
+html[data-theme=dark]{color-scheme:dark;--surface:#111a21;--surface-soft:#19252d;--surface-raised:#202f39;--text-main:#edf2f5;--text-secondary:#b6c4cc;--theme-border:#3a4b54;--navy:#dce9ef;--muted:#b6c4cc;--line:#35454e;--coral:#ff9c8a;background:var(--surface);color:var(--text-main)}
+html[data-theme=dark] body{background:var(--surface);color:var(--text-main)}
+html[data-theme=dark] :is(.site-header,.site-desktop-nav,.site-mobile-panel,.site-category-menu,.cart-drawer,.info-modal,.account-panel,.product-card,.catalog-filters,.admin-card,.admin-row,.admin-table,.admin-topbar,.dropdown){background:var(--surface-raised);color:var(--text-main);border-color:var(--theme-border)}
+html[data-theme=dark] :is(.site-search,.catalog-local-search,.catalog-heading,.newsletter,.favorites-summary,.cart-page-summary,.catalog-empty,.admin-shell,.admin-metrics a,.photo-placeholder,.gallery-thumbnails button,.checkout-page .delivery-choice){background:var(--surface-soft);color:var(--text-main);border-color:var(--theme-border)}
+html[data-theme=dark] :is(input,select,textarea){background:var(--surface);color:var(--text-main);border-color:var(--theme-border)}
+html[data-theme=dark] :is(.site-search input,.catalog-local-search input){background:transparent;color:var(--text-main)}
+html[data-theme=dark] :is(input,textarea)::placeholder{color:#a7b5bf;opacity:1}
+html[data-theme=dark] :is(.site-search-submit,.site-search-clear,.gallery-arrows button,.gallery-zoom,.admin-pagination button,.admin-table button,.admin-row button){background:var(--surface-raised);color:var(--text-main);border-color:var(--theme-border)}
+html[data-theme=dark] :is(.hero,.audio-promo,.style-promo){background:#22332f;color:var(--text-main)}
+html[data-theme=dark] :is(.floating-tag,.offer-sticker){background:var(--surface-raised);color:var(--text-main)}
+html[data-theme=dark] :is(.hero-copy p,.hero-selection-note,.sidebar-label,.sidebar-bottom,.selection-label,.brand,.product-reference,.product-info small,.site-account small,.site-inspiration,.catalog-heading p,.catalog-result-heading p,.catalog-filter-body,.catalog-demo-note,.account-panel p,.cart-demo-notice,.product-information p,.product-information dt,.information-content p,.information-heading p,.cart-page-product small,.cart-page-product p,.cart-page-heading p,.product-gallery figcaption,.admin-topbar span,.admin-table small,.admin-table caption,.faq-tools label){color:var(--text-secondary)}
+html[data-theme=dark] :is(.button-dark,.newsletter-input button){background:#dce9ef;color:#152b38}
+html[data-theme=dark] .button-dark:hover{background:#fff;color:#152b38}
+html[data-theme=dark] :is(.site-topbar,.site-footer,.admin-sidebar,.editorial-band){background:#0c1820;color:#e5eef3}
+html[data-theme=dark] .site-preferences-note{background:var(--surface-soft);color:var(--text-secondary)}
+html[data-theme=dark] :is(.account-demo-banner,.admin-banner,.admin-notice,.account-confirm,.admin-confirm,.cart-clear-confirm,.favorites-confirm){background:#2c3029;color:#f0dfbf;border-color:#74694c}
+html[data-theme=dark] :is(.admin-table th,.account-stats a,.admin-metrics a){background:var(--surface-raised);color:var(--text-main)}
+html[data-theme=dark] :is(.admin-content input,.admin-content select,.account-panel input,.information-content select,.information-content textarea,.faq-tools input){background:var(--surface);color:var(--text-main);border-color:var(--theme-border)}
+html[data-theme=dark] :is(.catalog-filter-body nav a:hover,.catalog-filter-body nav .is-selected,.catalog-active-filters button,.category-sidebar a:hover,.site-category-menu a:hover,.site-mobile-category:hover){background:#30443f;color:#f0f7f3}
+html[data-theme=dark] :is(.gallery-stage,.product-image){background:#263039!important}
+html[data-theme=dark] .photo-loading{background:linear-gradient(110deg,#24333d,#31434e,#24333d)}
+html[data-theme=dark] :is(.product-information,.product-information details,.product-information dl>div,.cart-page-line,.faq-item,.information-section,.demo-address,.checkout-items li,.admin-table td,.admin-table th,.cart-summary,.quantity,.newsletter-input,.site-footer-notice,.site-footer-bottom,.site-action-divider,.benefits-strip,.category-sidebar){border-color:var(--theme-border)}
+html[data-theme=dark] :is(.field-error,.catalog-field-error,.form-error,.stock.unavailable,.product-unavailable){color:#ffb3a5}
+html[data-theme=dark] .stock{color:#9ee3b5}
+html[data-theme=dark] .gallery-thumbnails button[aria-pressed=true]{border-color:#cbe3d6}
+html[data-theme=dark] .theme-switcher button[aria-pressed=true]{background:#cbe3d6;color:#142e43}
+html[data-theme=dark] ::selection{background:#674c44;color:#fff}
+@media(max-width:600px){.site-topbar-links{gap:9px}.theme-switcher button{width:27px;height:27px}.site-topbar-inner>span:first-child{flex-basis:100%;justify-content:center}.site-topbar-links{justify-content:center}}
+@media(prefers-reduced-motion:reduce){.theme-switcher button{transition:none}}
+html[data-theme=dark] .newsletter-input{background:var(--surface-raised)}
+html[data-theme=dark] .toast-message{background:#243b46;color:#f0f5f7;border:1px solid #5b7580}
+html[data-theme=dark] .add-button:hover{background:#cbe3d6;color:#142e43}
+html[data-theme=dark] .catalog-pagination>div a[aria-current=page]{background:#cbe3d6;color:#142e43;border-color:#cbe3d6}
+html[data-theme=dark] .site-count{background:#ff9c8a;color:#172d40;border-color:var(--surface-raised)}
+html[data-theme=dark] .field-error{color:#ffb3a5}
+html[data-theme=dark] .button-light{background:#edf2f5;color:#142e43}
+html[data-theme=dark] :is(.favorite,.hero-carousel-arrow){background:var(--surface-raised);color:var(--text-main);border-color:var(--theme-border)}
+html[data-theme=dark] :is(.benefits-strip .service-link>svg:first-child,.values svg){color:#aecdbd}

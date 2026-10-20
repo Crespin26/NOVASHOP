@@ -360,3 +360,7 @@ Textes ajoutés traduits FR/EN ; devises conservées. Validation : tests de gale
 Les parcours profil/adresses disposent d’une validation par champ, d’un focus cohérent, d’une confirmation de retrait et d’une protection des modifications non enregistrées lors des navigations internes. Les anciennes fenêtres compte/checkout sont retirées du layout. Les données restent fictives et en mémoire.
 
 L’administration sépare désormais logique, formulaire produit et pagination. Ses listes utilisent une pagination partagée ; les ajustements de stock capturent les valeurs confirmées. Les changements de navigation active sont cohérents sur les pages de détail. Une recette Playwright est conservée dans le dépôt et intégrée à la CI pour français, anglais et mobile. Voir `docs/frontend-qa.md` pour l’exécution, la couverture et les limites (notamment absence de certification d’accessibilité et services métier encore non connectés).
+
+### Modes d’affichage
+
+Ajout de deux modes explicites clair/sombre, accessibles avant le sélecteur de langue ainsi que dans l’administration. Préférence bornée aux valeurs light/dark dans nova-preferences, appliquée au démarrage, sans changer les montants, listes ni formulaires. Le thème couvre boutique, compte, panier, checkout, informations et administration ; les médias gardent leurs couleurs d’origine. Tests unitaires et recette navigateur dédiés ; captures disponibles dans les artefacts de recette.

@@ -21,3 +21,5 @@ import './account.css'
 import './checkout.css'
 import './information.css'
 import './admin.css'
+
+import './theme.css'
