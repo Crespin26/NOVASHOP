@@ -1,9 +1,11 @@
+import { adminLinks, adminDetails } from '../admin.js'
 import { informationPages } from '../information.js'
 import { nextTick } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { canonicalQuery, findProductBySlug, findCategoryBySlug, sameQuery } from './policy.js'
 
 export const routes = [
+  { path:'/admin', component:()=>import('../views/admin/AdminLayout.vue'), children:[...adminLinks,...adminDetails].map(([name,path,title])=>({path:path==='/admin'?'':path.slice(7),name,component:()=>import('../views/admin/AdminView.vue'),meta:{title,adminDemo:true}})) },
   ...[...informationPages, {name:'help',path:'/aide',title:'Aide et FAQ'}, {name:'contact',path:'/contact',title:'Contact'}].map(page => ({path:page.path,name:page.name,component:()=>import('../views/InformationView.vue'),meta:{title:page.title}})),
   { path: '/commande', name: 'checkout', component: () => import('../views/CheckoutView.vue'), meta: { title: 'Votre commande' } },
   { path: '/commande/retour', name: 'checkout-return', component: () => import('../views/OrderView.vue'), meta: { title: 'Retour de paiement' } },

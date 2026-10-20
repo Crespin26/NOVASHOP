@@ -293,7 +293,7 @@ Pour chaque ID de l’inventaire :
 
 Le point 2 est une première passe de navigation globale. Les liens qui dépendent des points suivants seront activés avec leurs pages, puis une revue intégrale en point 13 vérifiera l’absence de destination provisoire. Définir les contrats de données de chaque écran avant de finaliser ses formulaires frontend évitera des divergences avec les API.
 
-Les points 1 à 9 sont réalisés pour le périmètre frontend disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
+Les points 1 à 10 sont réalisés pour le périmètre frontend disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
 
 Les catégories sont maintenant reliées à leurs pages dédiées, y compris depuis l’accueil, l’en-tête, le footer et les fiches produit. Les pages assistance et informations légales sont maintenant disponibles avec un contenu de démonstration ; les informations réelles de l’exploitant restent à renseigner. Leur activation reste suivie avec les lots concernés ; cela ne bloque pas la première passe du point 2.
 
@@ -319,4 +319,8 @@ Le point 9 ajoute les neuf pages publiques : à propos, contact, aide/FAQ, livra
 
 Les pages commerciales et légales sont explicitement provisoires : aucune entreprise, adresse, politique de retour ou délai fictif n’est présenté comme réel. La confidentialité décrit le stockage local panier/favoris et le chargement d’images externes. Aucun traceur optionnel ni faux panneau de consentement ajouté. Avant ouverture, compléter et valider l’identité de l’exploitant, hébergeur, contacts, conditions commerciales, droits des contenus et information sur les traitements effectifs. Le formulaire réel, sa protection contre les abus et ses états d’envoi seront connectés avec le backend.
 
-Prochain travail : point 10, administration frontend.
+Le point 10 ajoute les 16 routes `/admin` dans un layout distinct sans en-tête ni footer boutique. Tableau de bord, catalogue avec recherche/publication/archivage, création et édition validées avec avertissement avant abandon, catégories avec classement et réaffectation, ajustements motivés de stock, commandes et transitions simulées, clients, retours, messages, paramètres et journal sont disponibles. Les références inconnues affichent un état explicite. Les actions destructives et transitions sont confirmées ; aucun paiement, remboursement ni message réel n’est envoyé.
+
+Toutes les données administratives sont fictives, isolées du catalogue public et conservées en mémoire seulement. La navigation directe est publique pour cet aperçu : aucun rôle local ni garde frontend ne constitue une autorisation réelle. Photos et variantes à l’édition, médiathèque sécurisée, pagination serveur, autorisations et audit persistant restent à intégrer avec les API. Les paramètres ne contiennent aucun secret d’infrastructure. Le journal local est limité à 100 entrées ; aucun compte administrateur réel ni déconnexion serveur n’est simulé.
+
+Prochain travail : point 11, backend métier.

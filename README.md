@@ -120,3 +120,5 @@ Ne jamais publier de secrets, de données clients, de clés Stripe ou de fichier
 Le parcours `/commande` propose trois étapes de démonstration, puis une confirmation et un suivi illustratif dans le compte. Les simulations restent en mémoire jusqu’au rechargement, sans coordonnées conservées, commande réelle ni paiement Stripe. Le panier est conservé.
 
 Les pages aide/FAQ, contact, livraison, retours et informations légales sont accessibles depuis le footer. La FAQ est filtrable ; le formulaire de contact simule un envoi sans transmission ni stockage. Les informations légales et commerciales restent provisoires jusqu’à validation des données réelles de l’exploitant.
+
+L’aperçu public `/admin` propose 16 écrans de gestion dans un layout distinct. Les données administratives fictives restent en mémoire et sont isolées de la boutique. Aucune action ne modifie des données réelles ; les autorisations serveur seront ajoutées avec les API métier.
