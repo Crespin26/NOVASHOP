@@ -8,8 +8,11 @@ import StoreFooter from './components/layout/StoreFooter.vue'
 import { products, image, money } from './shop.js'
 import { readStorage, restoreCart, restoreFavorites } from './storage.js'
 import { storefrontKey } from './composables/storefront.js'
+import { checkoutSnapshot } from './checkout.js'
 import { cartSummary } from './cart.js'
 import { makeCatalogQuery } from './router/policy.js'
+const demoOrders = ref([])
+let orderSequence = 0
 const isDevelopment = import.meta.env.DEV
 const route = useRoute()
 const router = useRouter()
@@ -56,7 +59,15 @@ function removeLine(id) {
 function clearCart() { cart.value = []; notify('Votre panier a été vidé.') }
 function beginCheckout() {
   if (!cart.value.length) return
-  cartOpen.value = false; checkout.value = true
+  closeOverlays(); router.push({name:'checkout'})
+}
+function simulateOrder() {
+  const snapshot = checkoutSnapshot(cart.value)
+  if (!snapshot) return null
+  const order = { ...snapshot, reference: `DEMO-${++orderSequence}`, date: new Date().toISOString(), status: 'Simulation terminée' }
+  demoOrders.value.unshift(order)
+  demoOrders.value = demoOrders.value.slice(0, 20)
+  return order.reference
 }
 function browse(category = 'Tout découvrir', sort = 'featured') {
   return router.push({ name: 'catalog', query: makeCatalogQuery({ category, sort }) })
@@ -96,7 +107,7 @@ function subscribe() {
   if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { newsletterError.value = 'Saisissez une adresse e-mail valide.'; return }
   newsletterError.value = ''; subscribed.value = true
 }
-provide(storefrontKey, { favorites, toggleFavorite, clearFavorites, add, browse, home, cart, summary, change, removeLine, clearCart, beginCheckout })
+provide(storefrontKey, { favorites, toggleFavorite, clearFavorites, add, browse, home, cart, summary, change, removeLine, clearCart, beginCheckout, demoOrders, simulateOrder })
 onMounted(() => document.addEventListener('keydown', keyboard))
 onUnmounted(() => { document.removeEventListener('keydown', keyboard); clearTimeout(toastTimer); document.body.style.overflow = '' })
 </script>

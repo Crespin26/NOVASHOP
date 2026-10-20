@@ -3,6 +3,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { canonicalQuery, findProductBySlug, findCategoryBySlug, sameQuery } from './policy.js'
 
 export const routes = [
+  { path: '/commande', name: 'checkout', component: () => import('../views/CheckoutView.vue'), meta: { title: 'Votre commande' } },
+  { path: '/commande/retour', name: 'checkout-return', component: () => import('../views/OrderView.vue'), meta: { title: 'Retour de paiement' } },
+  { path: '/commande/paiement-interrompu', name: 'checkout-interrupted', component: () => import('../views/OrderView.vue'), meta: { title: 'Paiement interrompu' } },
+  { path: '/commande/confirmation/:reference', name: 'checkout-confirmation', component: () => import('../views/OrderView.vue'), meta: { title: 'Confirmation de démonstration' } },
+  { path: '/compte/commandes/:reference', name: 'account-order', component: () => import('../views/OrderView.vue'), meta: { title: 'Détail de démonstration' } },
+  { path: '/compte/commandes/:reference/suivi', name: 'account-order-tracking', component: () => import('../views/OrderView.vue'), meta: { title: 'Suivi de démonstration' } },
+  { path: '/compte/commandes/:reference/retour', name: 'account-order-return', component: () => import('../views/OrderView.vue'), meta: { title: 'Retour de démonstration' } },
+
   { path: '/connexion', name: 'login', component: () => import('../views/AuthView.vue'), meta: { title: 'Connexion' } },
   { path: '/inscription', name: 'register', component: () => import('../views/AuthView.vue'), meta: { title: 'Inscription' } },
   { path: '/mot-de-passe-oublie', name: 'forgot-password', component: () => import('../views/AuthView.vue'), meta: { title: 'Mot de passe oublié' } },

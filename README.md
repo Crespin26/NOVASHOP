@@ -116,3 +116,5 @@ Voir le [guide de l’interface](docs/interface.md) et le [README backend](backe
 Une publication publique peut valoriser le projet si les droits sur le code, les visuels et les contenus sont détenus. La visibilité du dépôt reste à configurer par son propriétaire. Aucune licence n’a encore été choisie ; la présence publique du code ne constitue pas une autorisation générale de réutilisation.
 
 Ne jamais publier de secrets, de données clients, de clés Stripe ou de fichiers `.env` réels. Utiliser uniquement des données fictives pour les démonstrations.
+
+Le parcours `/commande` propose trois étapes de démonstration, puis une confirmation et un suivi illustratif dans le compte. Les simulations restent en mémoire jusqu’au rechargement, sans coordonnées conservées, commande réelle ni paiement Stripe. Le panier est conservé.

@@ -9,7 +9,7 @@ Ce document est la référence de travail pour les pages, les URL et les destina
 - Hypothèse de départ : produits physiques, compte requis pour commander, une devise principale. Le code de démonstration utilise EUR ; devise commerciale, variantes, pays, taxes, livraison et politique de retour restent à définir avant les modules concernés.
 - Le catalogue, les prix, les avis, les stocks et les montants affichés sont fictifs. Une fonctionnalité frontend n’est considérée comme complète commercialement qu’après connexion et validation serveur.
 
-État observé dans `frontend/src/router/index.js` : les routes publiques incluent désormais aussi connexion, inscription, récupération, réinitialisation explicative et espace compte de démonstration. Le panier dispose d’une page `/panier` et d’un tiroir partagé ; le checkout reste une fenêtre explicative. Les autres destinations de ce document restent à créer. Les pages publiques existantes restent à enrichir selon leurs critères ci-dessous.
+État observé dans `frontend/src/router/index.js` : les routes publiques incluent désormais aussi connexion, inscription, récupération, réinitialisation explicative et espace compte de démonstration. Le panier dispose d’une page `/panier` et d’un tiroir partagé ; le checkout est un parcours de démonstration en trois étapes. Les autres destinations de ce document restent à créer. Les pages publiques existantes restent à enrichir selon leurs critères ci-dessous.
 
 ### Lecture des statuts et accès
 
@@ -293,7 +293,7 @@ Pour chaque ID de l’inventaire :
 
 Le point 2 est une première passe de navigation globale. Les liens qui dépendent des points suivants seront activés avec leurs pages, puis une revue intégrale en point 13 vérifiera l’absence de destination provisoire. Définir les contrats de données de chaque écran avant de finaliser ses formulaires frontend évitera des divergences avec les API.
 
-Les points 1 à 7 sont réalisés pour le périmètre frontend disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
+Les points 1 à 8 sont réalisés pour le périmètre frontend disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
 
 Les catégories sont maintenant reliées à leurs pages dédiées, y compris depuis l’accueil, l’en-tête, le footer et les fiches produit. Les pages assistance et informations légales ne sont pas encore implémentées. Leur activation reste suivie avec les lots concernés ; cela ne bloque pas la première passe du point 2.
 
@@ -311,4 +311,8 @@ Le point 7 ajoute les formulaires `/connexion`, `/inscription`, `/mot-de-passe-o
 
 Profil et adresses fictives sont modifiables en mémoire seulement ; création, édition, retrait et choix d’une adresse par défaut sont limités à cet aperçu (5 adresses maximum). L’historique est vide ; détails et suivi seront traités au point 8. Aucun stockage de mot de passe ni donnée personnelle, aucune pseudo-authentification dans localStorage. Les règles serveur de session Sanctum, CSRF, autorisations par propriétaire, limitation des tentatives, vérification e-mail et jetons temporaires seront implémentées au point 11. Ces écrans publics ne constituent pas une protection d’accès.
 
-Prochain travail : point 8, checkout et suivi frontend.
+Le point 8 ajoute `/commande` : coordonnées fictives validées, livraison standard simulée et récapitulatif avec reconnaissance explicite de la simulation. Un panier vide affiche une invitation à revenir au panier ; une modification du panier réinitialise les étapes. La confirmation repose sur un instantané canonique des articles et des montants, jamais sur les prix fournis par le stockage local. Les coordonnées ne sont ni transmises ni persistées ; elles sont effacées à la validation ou au départ de la page. Le panier reste intact.
+
+Les simulations (20 maximum en mémoire) sont consultables dans `/compte/commandes`, avec détail, suivi illustratif et explication des retours. Confirmation et références inconnues ou perdues au rechargement affichent un état indisponible. Les routes de retour de paiement et de paiement interrompu ne déclenchent aucune mutation et ne confirment jamais un paiement à partir de l’URL. Aucun champ bancaire, appel Stripe, débit, e-mail ni expédition réelle. L’authentification, l’idempotence, les autorisations par propriétaire, le recalcul serveur et la vérification Stripe restent à implémenter aux points 11 et 12.
+
+Prochain travail : point 9, informations et assistance.
