@@ -118,3 +118,5 @@ Une publication publique peut valoriser le projet si les droits sur le code, les
 Ne jamais publier de secrets, de données clients, de clés Stripe ou de fichiers `.env` réels. Utiliser uniquement des données fictives pour les démonstrations.
 
 Le parcours `/commande` propose trois étapes de démonstration, puis une confirmation et un suivi illustratif dans le compte. Les simulations restent en mémoire jusqu’au rechargement, sans coordonnées conservées, commande réelle ni paiement Stripe. Le panier est conservé.
+
+Les pages aide/FAQ, contact, livraison, retours et informations légales sont accessibles depuis le footer. La FAQ est filtrable ; le formulaire de contact simule un envoi sans transmission ni stockage. Les informations légales et commerciales restent provisoires jusqu’à validation des données réelles de l’exploitant.

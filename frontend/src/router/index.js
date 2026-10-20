@@ -1,8 +1,10 @@
+import { informationPages } from '../information.js'
 import { nextTick } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { canonicalQuery, findProductBySlug, findCategoryBySlug, sameQuery } from './policy.js'
 
 export const routes = [
+  ...[...informationPages, {name:'help',path:'/aide',title:'Aide et FAQ'}, {name:'contact',path:'/contact',title:'Contact'}].map(page => ({path:page.path,name:page.name,component:()=>import('../views/InformationView.vue'),meta:{title:page.title}})),
   { path: '/commande', name: 'checkout', component: () => import('../views/CheckoutView.vue'), meta: { title: 'Votre commande' } },
   { path: '/commande/retour', name: 'checkout-return', component: () => import('../views/OrderView.vue'), meta: { title: 'Retour de paiement' } },
   { path: '/commande/paiement-interrompu', name: 'checkout-interrupted', component: () => import('../views/OrderView.vue'), meta: { title: 'Paiement interrompu' } },

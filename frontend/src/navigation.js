@@ -28,17 +28,17 @@ export const footerNavigation = [
     { label: 'Mes commandes · aperçu', to: { name: 'account-orders' } },
   ] },
   { title: 'Aide & NovaShop', items: [
-    { label: 'À propos', pending: true },
-    { label: 'Contact', pending: true },
-    { label: 'Questions fréquentes', pending: true },
-    { label: 'Livraison', pending: true },
-    { label: 'Retours et remboursements', pending: true },
+    { label: 'À propos', to: { name: 'about' } },
+    { label: 'Contact', to: { name: 'contact' } },
+    { label: 'Questions fréquentes', to: { name: 'help' } },
+    { label: 'Livraison', to: { name: 'delivery' } },
+    { label: 'Retours et remboursements', to: { name: 'returns-policy' } },
   ] },
   { title: 'Informations légales', items: [
-    { label: 'Conditions de vente', pending: true },
-    { label: 'Confidentialité', pending: true },
-    { label: 'Mentions légales', pending: true },
-    { label: 'Cookies', pending: true },
+    { label: 'Conditions de vente', to: { name: 'terms' } },
+    { label: 'Confidentialité', to: { name: 'privacy' } },
+    { label: 'Mentions légales', to: { name: 'legal' } },
+    { label: 'Cookies', to: { name: 'cookies' } },
   ] },
 ]
 

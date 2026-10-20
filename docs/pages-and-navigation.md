@@ -293,9 +293,9 @@ Pour chaque ID de l’inventaire :
 
 Le point 2 est une première passe de navigation globale. Les liens qui dépendent des points suivants seront activés avec leurs pages, puis une revue intégrale en point 13 vérifiera l’absence de destination provisoire. Définir les contrats de données de chaque écran avant de finaliser ses formulaires frontend évitera des divergences avec les API.
 
-Les points 1 à 8 sont réalisés pour le périmètre frontend disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
+Les points 1 à 9 sont réalisés pour le périmètre frontend disponible. L’en-tête et le footer utilisent une configuration de navigation partagée, des liens réels, des rubriques « Bientôt » non cliquables et des actions panier/compte explicitement limitées à la démonstration. Le toast provisoire de suivi a été retiré, les logos de paiement non connectés aussi. Le menu mobile, les panneaux catégories et le focus des fenêtres ont été vérifiés.
 
-Les catégories sont maintenant reliées à leurs pages dédiées, y compris depuis l’accueil, l’en-tête, le footer et les fiches produit. Les pages assistance et informations légales ne sont pas encore implémentées. Leur activation reste suivie avec les lots concernés ; cela ne bloque pas la première passe du point 2.
+Les catégories sont maintenant reliées à leurs pages dédiées, y compris depuis l’accueil, l’en-tête, le footer et les fiches produit. Les pages assistance et informations légales sont maintenant disponibles avec un contenu de démonstration ; les informations réelles de l’exploitant restent à renseigner. Leur activation reste suivie avec les lots concernés ; cela ne bloque pas la première passe du point 2.
 
 Le point 3 relie l’accueil à des sélections cohérentes, aux produits des bannières et aux listes promotions/nouveautés désormais disponibles. Les prix et réductions proviennent du même catalogue de démonstration ; les nouveautés reposent sur ses dates de publication fictives.
 
@@ -315,4 +315,8 @@ Le point 8 ajoute `/commande` : coordonnées fictives validées, livraison stand
 
 Les simulations (20 maximum en mémoire) sont consultables dans `/compte/commandes`, avec détail, suivi illustratif et explication des retours. Confirmation et références inconnues ou perdues au rechargement affichent un état indisponible. Les routes de retour de paiement et de paiement interrompu ne déclenchent aucune mutation et ne confirment jamais un paiement à partir de l’URL. Aucun champ bancaire, appel Stripe, débit, e-mail ni expédition réelle. L’authentification, l’idempotence, les autorisations par propriétaire, le recalcul serveur et la vérification Stripe restent à implémenter aux points 11 et 12.
 
-Prochain travail : point 9, informations et assistance.
+Le point 9 ajoute les neuf pages publiques : à propos, contact, aide/FAQ, livraison, retours, conditions de vente, confidentialité, mentions légales et cookies. Le footer et la navigation latérale utilisent les routes réelles. La FAQ dispose d’une recherche, de thèmes et d’un état vide réinitialisable. Le contact valide les champs bornés, signale les erreurs et efface la saisie après simulation sans envoi réseau ni stockage.
+
+Les pages commerciales et légales sont explicitement provisoires : aucune entreprise, adresse, politique de retour ou délai fictif n’est présenté comme réel. La confidentialité décrit le stockage local panier/favoris et le chargement d’images externes. Aucun traceur optionnel ni faux panneau de consentement ajouté. Avant ouverture, compléter et valider l’identité de l’exploitant, hébergeur, contacts, conditions commerciales, droits des contenus et information sur les traitements effectifs. Le formulaire réel, sa protection contre les abus et ses états d’envoi seront connectés avec le backend.
+
+Prochain travail : point 10, administration frontend.

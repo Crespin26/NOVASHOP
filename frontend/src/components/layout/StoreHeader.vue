@@ -93,7 +93,7 @@ onUnmounted(() => {
       <h2>Explorer les catégories</h2>
       <RouterLink v-for="item in categoryNavigation" :key="item.label" class="site-mobile-category" :to="item.to" @click="closePanels()"><component :is="icons[item.icon]" :size="18"/><span>{{item.label}}</span><ChevronRight :size="14"/></RouterLink>
       <div class="site-mobile-account"><RouterLink :to="{name:'favorites'}" @click="closePanels()"><Heart :size="18"/>Mes favoris <span>{{favoritesCount}}</span></RouterLink><button type="button" @click="action('account')"><UserRound :size="18"/>Mon compte <small>Aperçu</small></button><button type="button" @click="action('cart')"><ShoppingBag :size="18"/>Mon panier <span>{{count}}</span></button></div>
-      <p class="site-mobile-note">Les pages indiquées « Bientôt » sont en préparation.</p>
+      <p class="site-mobile-note">Boutique de démonstration · Aucun achat réel.</p>
     </nav>
   </header>
 </template>
