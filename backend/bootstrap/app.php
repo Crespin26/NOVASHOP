@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\SetApiLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -16,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo(
             fn (Request $request): ?string => $request->is('api/*') ? null : '/',
         );
+        $middleware->api(append: [SetApiLocale::class]);
         $middleware->statefulApi();
         $middleware->throttleApi();
     })

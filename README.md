@@ -126,3 +126,5 @@ L’aperçu public `/admin` propose 16 écrans de gestion dans un layout distinc
 Le sélecteur FR/EN traduit désormais les pages publiques et l’administration, leurs messages et les libellés accessibles, sans modifier les URL ni les identifiants métier. Les traductions anglaises sont dans `frontend/src/locales/en.json`, avec repli sur le français ; les contenus futurs des API devront fournir leurs traductions. Langue et devise sont indépendantes. Les recherches de produits acceptent les noms français et anglais.
 
 La recette navigateur est versionnée : voir [la recette frontend](docs/frontend-qa.md). Après `npm run build --prefix frontend`, lancer `npm run test:e2e --prefix frontend` avec Chromium installé via Playwright. Les parcours FR/EN/mobile, validations, confirmations, pagination administrative et navigation clavier sont vérifiés en CI.
+
+Le backend métier possède désormais les API de comptes, catalogue, sélections, stocks, commandes, paiement, retours et administration. Consulter [les contrats API](docs/backend-api.md) et les limites commerciales/techniques avant activation. La connexion des écrans Vue reste le point 12.

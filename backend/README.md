@@ -34,3 +34,15 @@ docker compose exec postgres createdb -U novashop -O novashop novashop_testing
 ```
 
 Cette commande ne doit être lancée que si la base n’existe pas.
+
+## API métier
+
+Les contrats, paramètres internationaux/TTC, règles d’accès et commandes de rapprochement sont décrits dans [docs/backend-api.md](../docs/backend-api.md). Les ventes sont désactivées par défaut ; aucune clé Stripe réelle ni offre de livraison mondiale n’est préconfigurée. Les contenus FR/EN restent des objets localisés. Les taux de règlement sont validés côté serveur et indépendants des conversions d’affichage Vue.
+
+```bash
+docker compose run --rm api php artisan migrate --no-interaction
+docker compose run --rm api vendor/bin/phpunit
+docker compose --profile jobs up -d worker scheduler
+```
+
+Exécuter les commandes Compose depuis la racine. Les tests utilisent uniquement `novashop_testing`, des notifications simulées et des requêtes Stripe factices. Le frontend n’est pas encore connecté à ces services.

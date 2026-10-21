@@ -10,13 +10,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class UserResource extends JsonResource
 {
     /**
-     * @return array{id: int, name: string, email: string, email_verified_at: ?string}
+     * @return array{id: int, name: string, locale: string, role: string, email: string, email_verified_at: ?string}
      */
     public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'locale' => $this->locale,
+            'role' => $this->is_admin ? 'admin' : 'customer',
             'email' => $this->email,
             'email_verified_at' => $this->email_verified_at?->toISOString(),
         ];

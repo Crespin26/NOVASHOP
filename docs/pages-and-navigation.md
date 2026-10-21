@@ -364,3 +364,9 @@ L’administration sépare désormais logique, formulaire produit et pagination.
 ### Modes d’affichage
 
 Ajout de deux modes explicites clair/sombre, accessibles avant le sélecteur de langue ainsi que dans l’administration. Préférence bornée aux valeurs light/dark dans nova-preferences, appliquée au démarrage, sans changer les montants, listes ni formulaires. Le thème couvre boutique, compte, panier, checkout, informations et administration ; les médias gardent leurs couleurs d’origine. Tests unitaires et recette navigateur dédiés ; captures disponibles dans les artefacts de recette.
+
+## Backend métier — point 11
+
+Une première implémentation des API v1 est disponible pour authentification, adresses, catalogue FR/EN, images, variantes, panier, favoris, stocks, commandes, paiement Stripe hébergé, retours, contact, newsletter et administration. Prix TTC en unités mineures, cibles pays/devises ISO, taux serveur frais et activation explicite du prestataire. Les réglages sont persistants et protégés par réauthentification. Aucun secret ni activation commerciale réelle n’est ajouté.
+
+Tests PostgreSQL de propriété, rôles, CSRF, fichiers refusés, stock concurrent, idempotence, expiration, signatures, montants de paiement, retours et rapprochement. Le frontend reste indépendant ; voir `docs/backend-api.md` pour les contrats et conditions avant ouverture. La fiscalité mondiale, les accords transporteurs, l’activation effective des devises prestataire et les essais avec comptes externes réels ne sont pas remplacés par les tests simulés.
